@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     compileOnly 'org.projectlombok:lombok'
@@ -28,10 +28,49 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    // testImplementation 'org.springframework.security:spring-security-test'
 
     runtimeOnly 'com.h2database:h2' // h2 DB
 }
+/* 
+def webappDir = "$projectDir/src/main/frontend/studymaker"
+
+sourceSets {
+main {
+resources {
+srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+}
+}
+}
+
+processResources {
+dependsOn "buildReact"
+}
+
+task buildReact(type: Exec) {
+dependsOn "installReact"
+workingDir "$webappDir"
+inputs.dir "$webappDir"
+group = BasePlugin.BUILD_GROUP
+if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+commandLine "npm.cmd", "run-script", "build"
+} else {
+commandLine "npm", "run-script", "build"
+}
+}
+
+task installReact(type: Exec) {
+workingDir "$webappDir"
+inputs.dir "$webappDir"
+group = BasePlugin.BUILD_GROUP
+if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+commandLine "npm.cmd", "audit", "fix"
+commandLine 'npm.cmd', 'install'
+} else {
+commandLine "npm", "audit", "fix"
+commandLine 'npm', 'install'
+}
+} */
 
 test {
     useJUnitPlatform()

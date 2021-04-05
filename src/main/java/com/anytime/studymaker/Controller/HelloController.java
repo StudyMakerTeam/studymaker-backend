@@ -1,4 +1,4 @@
-package com.anytime.studymaker;
+package com.anytime.studymaker.Controller;
 
 import java.util.Date;
 
