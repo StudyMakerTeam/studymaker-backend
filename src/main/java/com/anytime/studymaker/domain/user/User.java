@@ -45,9 +45,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     List<Reply> replyList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    List<Role> roleList = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roleList;
     }
 
     @Override
