@@ -33,44 +33,44 @@ dependencies {
     runtimeOnly 'com.h2database:h2' // h2 DB
 }
 
-// def webappDir = "$projectDir/src/main/frontend/studymaker"
+def webappDir = "$projectDir/src/main/frontend/studymaker"
 
-// sourceSets {
-// main {
-// resources {
-// srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
-// }
-// }
-// }
+sourceSets {
+main {
+resources {
+srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+}
+}
+}
 
-// processResources {
-// dependsOn "buildReact"
-// }
+processResources {
+dependsOn "buildReact"
+}
 
-// task buildReact(type: Exec) {
-// dependsOn "installReact"
-// workingDir "$webappDir"
-// inputs.dir "$webappDir"
-// group = BasePlugin.BUILD_GROUP
-// if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-// commandLine "npm.cmd", "run-script", "build"
-// } else {
-// commandLine "npm", "run-script", "build"
-// }
-// }
+task buildReact(type: Exec) {
+dependsOn "installReact"
+workingDir "$webappDir"
+inputs.dir "$webappDir"
+group = BasePlugin.BUILD_GROUP
+if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+commandLine "npm.cmd", "run-script", "build"
+} else {
+commandLine "npm", "run-script", "build"
+}
+}
 
-// task installReact(type: Exec) {
-// workingDir "$webappDir"
-// inputs.dir "$webappDir"
-// group = BasePlugin.BUILD_GROUP
-// if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-// commandLine "npm.cmd", "audit", "fix"
-// commandLine 'npm.cmd', 'install'
-// } else {
-// commandLine "npm", "audit", "fix"
-// commandLine 'npm', 'install'
-// }
-// }
+task installReact(type: Exec) {
+workingDir "$webappDir"
+inputs.dir "$webappDir"
+group = BasePlugin.BUILD_GROUP
+if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+commandLine "npm.cmd", "audit", "fix"
+commandLine 'npm.cmd', 'install'
+} else {
+commandLine "npm", "audit", "fix"
+commandLine 'npm', 'install'
+}
+}
 
 test {
     useJUnitPlatform()
