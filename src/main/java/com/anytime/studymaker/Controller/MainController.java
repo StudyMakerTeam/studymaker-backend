@@ -1,12 +1,11 @@
 package com.anytime.studymaker.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.anytime.studymaker.Controller.common.CrudController;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api")
 @RestController
-public class MainController {
+public class MainController implements CrudController {
 
-//    TODO : 로그인, 로그아웃
+//    TODO : 메인
 
 }
