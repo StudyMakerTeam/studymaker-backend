@@ -16,14 +16,13 @@ public class Role implements GrantedAuthority {
     @GeneratedValue
     private Long roleId;
 
-    @Enumerated(EnumType.STRING)
-    private  Authority authority;
+    private String role;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Override
     public String getAuthority() {
-        return this.authority.getName();
+        return this.role;
     }
 }
