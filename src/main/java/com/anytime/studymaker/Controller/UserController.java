@@ -1,7 +1,11 @@
 package com.anytime.studymaker.Controller;
 
-import com.anytime.studymaker.service.UserService;
+import com.anytime.studymaker.domain.common.Header;
+import com.anytime.studymaker.domain.user.dto.UserApiRequest;
+import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import com.anytime.studymaker.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +17,10 @@ public class UserController {
 
     private final UserService userService;
 
-//    TODO : 회원가입, 정보수정
+    @PostMapping("/signUp")
+    public Header<UserApiResponse> signUp(UserApiRequest request) {
+        //    TODO : 회원가입
 
+        return new Header<UserApiResponse>();
+    }
 }

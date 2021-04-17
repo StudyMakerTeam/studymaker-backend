@@ -1,6 +1,5 @@
 package com.anytime.studymaker.domain.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
 @Accessors(chain = true)

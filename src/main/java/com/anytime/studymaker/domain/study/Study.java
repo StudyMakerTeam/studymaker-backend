@@ -1,7 +1,6 @@
 package com.anytime.studymaker.domain.study;
 
 import com.anytime.studymaker.domain.user.UserStudy;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Accessors(chain = true)
 @Entity
