@@ -3,6 +3,7 @@ package com.anytime.studymaker.domain.user;
 import com.anytime.studymaker.domain.study.Reply;
 import com.anytime.studymaker.domain.study.StudyBoard;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,14 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
+@Data
 @Accessors(chain = true)
 @RedisHash("studymaker")
 @Entity
 public class User implements UserDetails {
+    @org.springframework.data.annotation.Id
     @Id
     @GeneratedValue
     private Long userId;
@@ -55,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.getPassword();
+        return this.password;
     }
 
     @Override

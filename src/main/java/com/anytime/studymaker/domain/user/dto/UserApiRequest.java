@@ -1,6 +1,7 @@
 package com.anytime.studymaker.domain.user.dto;
 
 import com.anytime.studymaker.domain.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Accessors(chain = true)
 @Data

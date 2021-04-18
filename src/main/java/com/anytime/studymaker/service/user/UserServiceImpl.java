@@ -2,7 +2,7 @@ package com.anytime.studymaker.service.user;
 
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
-import com.anytime.studymaker.domain.user.repository.UserRepository;
+import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
