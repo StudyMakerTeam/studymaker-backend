@@ -3,7 +3,7 @@ package com.anytime.studymaker.config;
 import com.anytime.studymaker.config.jwt.JwtAccessDeniedHandler;
 import com.anytime.studymaker.config.jwt.JwtAuthenticationEntryPoint;
 import com.anytime.studymaker.config.jwt.JwtFilter;
-import com.anytime.studymaker.config.jwt.TokenProvider;
+import com.anytime.studymaker.config.jwt.JWTProvider;
 import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.service.user.UserService;
 import org.springframework.context.annotation.Bean;
@@ -21,17 +21,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
-    private final TokenProvider tokenProvider;
+    private final JWTProvider JWTProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    public SecurityConfig(UserService userService, TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+    public SecurityConfig(UserService userService, JWTProvider JWTProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
         this.userService = userService;
-        this.tokenProvider = tokenProvider;
+        this.JWTProvider = JWTProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
@@ -58,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/exception/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(JWTProvider), UsernamePasswordAuthenticationFilter.class);
 
 
     }

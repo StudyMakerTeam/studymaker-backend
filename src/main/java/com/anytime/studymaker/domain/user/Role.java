@@ -16,6 +16,10 @@ public class Role implements GrantedAuthority {
 
     private String role;
 
+    public Role(String role) {
+        this.role = role;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
