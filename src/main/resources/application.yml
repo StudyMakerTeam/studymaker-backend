@@ -1,4 +1,22 @@
-spring.h2.console.enabled: true
-logging.level.org.hibernate.SQL: debug            # 로그 형식으로 쿼리 보여주기
-spring.jpa.properties.hibernate.format_sql: true  # 압축된 쿼리를 읽기 좋게 포멧
-spring.jpa.hibernate.ddl-auto: create             # 서버 시작에 테이블 생성
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+jwt:
+  secret: zf5sG7YPj2UYnig77n5IrtZ0nWR71LKTjlS0mNfztCAfVvuOHEvgRNi2qmMpI1oMnSvRxTYVbtV8lgShU1RA
+  token-validity-in-millisecond: 18000

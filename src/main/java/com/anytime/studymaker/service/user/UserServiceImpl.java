@@ -1,21 +1,28 @@
-package com.anytime.studymaker.service;
+package com.anytime.studymaker.service.user;
 
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
-import com.anytime.studymaker.repository.UserRepository;
-import com.anytime.studymaker.service.common.CrudService;
+import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
 @Service
-public class UserServiceImpl implements UserService, CrudService<UserApiRequest, UserApiResponse> {
+public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    //    UserDetailsService
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
+    }
+
+    //    CrudService
     @Override
     public void create(UserApiRequest userApiRequest) {
         userRepository.save(userApiRequest.toEntity());
@@ -37,8 +44,5 @@ public class UserServiceImpl implements UserService, CrudService<UserApiRequest,
         userRepository.deleteById(id);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
-    }
+
 }

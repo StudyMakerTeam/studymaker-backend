@@ -14,8 +14,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
+@Data
 @Accessors(chain = true)
 @Entity
 public class StudyBoard {

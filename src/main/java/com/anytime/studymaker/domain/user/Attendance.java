@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
+@Data
 @Accessors(chain = true)
 @Entity
 public class Attendance {
