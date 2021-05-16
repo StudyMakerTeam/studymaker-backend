@@ -41,7 +41,7 @@ public class JWTProvider implements TokenProvider {
 
     @Override
     public String createToken(Authentication authentication) {
-        String AuthoritySet = authentication.getAuthorities().stream()
+        String authoritySet = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(", "));
 
@@ -50,7 +50,7 @@ public class JWTProvider implements TokenProvider {
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim(AUTHORITY_KEY, AuthoritySet)
+                .claim(AUTHORITY_KEY, authoritySet)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();

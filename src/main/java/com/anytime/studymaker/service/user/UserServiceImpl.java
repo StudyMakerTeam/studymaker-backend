@@ -3,18 +3,21 @@ package com.anytime.studymaker.service.user;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
 import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@RequiredArgsConstructor
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     //    UserDetailsService
     @Override
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService {
     //    CrudService
     @Override
     public void create(UserApiRequest userApiRequest) {
+        userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
         userRepository.save(userApiRequest.toEntity());
     }
 

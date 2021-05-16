@@ -1,14 +1,9 @@
 package com.anytime.studymaker.domain.user.dto;
 
 import com.anytime.studymaker.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -18,9 +13,6 @@ import java.time.LocalDateTime;
 @Data
 public class UserApiRequest {
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
-
     private String email;
     private String name;
     private String nickname;
@@ -29,6 +21,6 @@ public class UserApiRequest {
     private LocalDateTime updateAt;
 
     public User toEntity() {
-        return User.builder().name(name).nickname(nickname).password(passwordEncoder.encode(password)).createAt(LocalDateTime.now()).build();
+        return User.builder().email(email).password(password).name(name).nickname(nickname).createAt(LocalDateTime.now()).build();
     }
 }

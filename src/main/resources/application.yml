@@ -2,9 +2,11 @@ spring:
   redis:
     host: localhost
     port: 6379
-  h2:
-    console:
-      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/studymaker
+    username: root
+    password:
   jpa:
     hibernate:
       ddl-auto: create
@@ -19,4 +21,4 @@ logging:
 
 jwt:
   secret: zf5sG7YPj2UYnig77n5IrtZ0nWR71LKTjlS0mNfztCAfVvuOHEvgRNi2qmMpI1oMnSvRxTYVbtV8lgShU1RA
-  token-validity-in-millisecond: 18000
+  tokenValidityTimeLimit: 18000
