@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
+@Data
 @Accessors(chain = true)
 @Entity
 public class Reply {
