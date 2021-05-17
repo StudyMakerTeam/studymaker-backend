@@ -1,5 +1,7 @@
 package com.anytime.studymaker.domain.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,7 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 @Entity
 public class Role implements GrantedAuthority {
     @Id

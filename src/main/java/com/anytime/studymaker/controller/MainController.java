@@ -9,11 +9,14 @@ import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +25,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
-public class MainController{
+public class MainController {
 
     private final UserService userService;
     private final JWTProvider JWTProvider;
@@ -46,8 +49,10 @@ public class MainController{
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = JWTProvider.createToken(authentication);
+        String jwt = "Bearer " + JWTProvider.createToken(authentication);
         Token token = new Token(jwt);
-        return ResponseEntity.ok(token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", jwt);
+        return new ResponseEntity<Token>(token, headers, HttpStatus.OK);
     }
 }

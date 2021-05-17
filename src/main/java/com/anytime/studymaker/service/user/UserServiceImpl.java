@@ -1,7 +1,10 @@
 package com.anytime.studymaker.service.user;
 
+import com.anytime.studymaker.domain.user.Role;
+import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import com.anytime.studymaker.domain.user.repository.jpa.RoleRepository;
 import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,7 @@ import javax.transaction.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     //    UserDetailsService
@@ -29,7 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(UserApiRequest userApiRequest) {
         userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
-        userRepository.save(userApiRequest.toEntity());
+        User user = userRepository.save(userApiRequest.toEntity());
+        Role role = Role.builder().role(userApiRequest.getRole()).user(user).build();
+        roleRepository.save(role);
     }
 
     @Override

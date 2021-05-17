@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class JWTProvider implements TokenProvider {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        byte[] keyBytes = Base64.getEncoder().encode(secret.getBytes());
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -47,12 +48,12 @@ public class JWTProvider implements TokenProvider {
 
         long now = new Date().getTime();
         Date validity = new Date(now + this.tokenValidityTimeLimit);
-
         return Jwts.builder()
                 .setSubject(authentication.getName())
+//                .claim("userId", )
                 .claim(AUTHORITY_KEY, authoritySet)
-                .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 

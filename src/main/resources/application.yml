@@ -9,7 +9,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -20,5 +20,5 @@ logging:
         SQL: debug
 
 jwt:
-  secret: zf5sG7YPj2UYnig77n5IrtZ0nWR71LKTjlS0mNfztCAfVvuOHEvgRNi2qmMpI1oMnSvRxTYVbtV8lgShU1RA
-  tokenValidityTimeLimit: 18000
+  secret: studymaker_is_good_web_application_for_developer
+  tokenValidityTimeLimit: 600000
