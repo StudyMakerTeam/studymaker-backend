@@ -25,4 +25,5 @@ logging:
 
 jwt:
   secret: studymaker_is_good_web_application_for_developer
+  issuer: studymaker
   tokenValidityTimeLimit: 600000

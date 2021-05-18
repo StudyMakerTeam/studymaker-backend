@@ -22,4 +22,8 @@ public interface UserService extends UserDetailsService {
 
     @Secured("ROLE_USER")
     void delete(Long id);
+
+    boolean existEmail(String email);
+
+    boolean existNickname(String nickname);
 }

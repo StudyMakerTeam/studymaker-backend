@@ -7,7 +7,6 @@ import com.anytime.studymaker.domain.user.dto.UserApiResponse;
 import com.anytime.studymaker.domain.user.repository.jpa.RoleRepository;
 import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,5 +52,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public boolean existEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
+    @Override
+    public boolean existNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
 }

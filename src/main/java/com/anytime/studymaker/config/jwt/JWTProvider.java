@@ -29,6 +29,9 @@ public class JWTProvider implements TokenProvider {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.issuer}")
+    private String issuer;
+
     @Value("${jwt.tokenValidityTimeLimit}")
     private long tokenValidityTimeLimit;
 
@@ -49,11 +52,12 @@ public class JWTProvider implements TokenProvider {
         Date validity = new Date(now + this.tokenValidityTimeLimit);
         return Jwts.builder()
                 .setSubject(user.getEmail())
+                .setIssuer(issuer)
+                .setExpiration(validity)
                 .claim("userId", user.getUserId())
                 .claim("username", user.getName())
                 .claim("nickname", user.getNickname())
                 .claim(AUTHORITY_KEY, authoritySet)
-                .setExpiration(validity)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
