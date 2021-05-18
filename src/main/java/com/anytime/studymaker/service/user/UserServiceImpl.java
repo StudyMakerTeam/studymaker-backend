@@ -21,17 +21,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     //    UserDetailsService
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 
     //    CrudService
     @Override
-    public void create(UserApiRequest userApiRequest) {
+    public void create(UserApiRequest userApiRequest, PasswordEncoder passwordEncoder) {
         userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
         User user = userRepository.save(userApiRequest.toEntity());
         Role role = Role.builder().role(userApiRequest.getRole()).user(user).build();

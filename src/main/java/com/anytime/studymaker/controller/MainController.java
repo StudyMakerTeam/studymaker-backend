@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.header.Header;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +29,8 @@ public class MainController {
 
     private final UserService userService;
     private final JWTProvider JWTProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping("/main")
     public String hello() {
@@ -39,15 +40,14 @@ public class MainController {
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody UserApiRequest request) {
         //    TODO : 회원가입
-        userService.create(request);
+        userService.create(request, passwordEncoder);
         ResponseEntity<String> responseEntity = ResponseEntity.ok("회원 가입이 완료되었습니다.");
         return responseEntity;
     }
 
     @PostMapping("/signin")
     public ResponseEntity<Token> signIn(@Valid @RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = "Bearer " + JWTProvider.createToken(authentication);
         Token token = new Token(jwt);

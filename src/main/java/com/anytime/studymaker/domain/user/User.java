@@ -3,10 +3,7 @@ package com.anytime.studymaker.domain.user;
 import com.anytime.studymaker.domain.study.Reply;
 import com.anytime.studymaker.domain.study.StudyBoard;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +20,7 @@ import java.util.*;
 @Builder
 @Data
 @Accessors(chain = true)
+@ToString(exclude = "roleList")
 @Entity
 public class User implements UserDetails {
     @Id
