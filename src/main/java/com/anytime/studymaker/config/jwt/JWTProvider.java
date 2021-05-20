@@ -1,16 +1,14 @@
 package com.anytime.studymaker.config.jwt;
 
 import com.anytime.studymaker.domain.user.Role;
+import com.anytime.studymaker.domain.user.User;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -31,6 +29,9 @@ public class JWTProvider implements TokenProvider {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.issuer}")
+    private String issuer;
+
     @Value("${jwt.tokenValidityTimeLimit}")
     private long tokenValidityTimeLimit;
 
@@ -42,17 +43,21 @@ public class JWTProvider implements TokenProvider {
 
     @Override
     public String createToken(Authentication authentication) {
-        String authoritySet = authentication.getAuthorities().stream()
+        User user = (User) authentication.getPrincipal();
+        String authoritySet = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(", "));
 
         long now = new Date().getTime();
         Date validity = new Date(now + this.tokenValidityTimeLimit);
         return Jwts.builder()
-                .setSubject(authentication.getName())
-//                .claim("userId", )
-                .claim(AUTHORITY_KEY, authoritySet)
+                .setSubject(user.getEmail())
+                .setIssuer(issuer)
                 .setExpiration(validity)
+                .claim("userId", user.getUserId())
+                .claim("username", user.getName())
+                .claim("nickname", user.getNickname())
+                .claim(AUTHORITY_KEY, authoritySet)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
@@ -61,13 +66,10 @@ public class JWTProvider implements TokenProvider {
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token).getBody();
+        Collection<GrantedAuthority> authoritySet = Arrays.stream(claims.get(AUTHORITY_KEY, String.class).split(", ")).sequential().map(Role::new).collect(Collectors.toSet());
 
-        Collection authoritySet = Arrays
-                .stream(claims.get(AUTHORITY_KEY).toString().split(", "))
-                .map(Role::new).collect(Collectors.toList());
-
-        User user = new User(claims.getSubject(), "", authoritySet);
-        return new UsernamePasswordAuthenticationToken(user, token, authoritySet);
+        User user = User.builder().email(claims.getSubject()).userId(claims.get("userId", Long.class)).build();
+        return new UsernamePasswordAuthenticationToken(user, null, authoritySet);
     }
 
     @Override

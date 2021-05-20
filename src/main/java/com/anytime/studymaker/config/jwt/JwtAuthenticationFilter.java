@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
     private JWTProvider JWTProvider;
 
-    public JwtFilter(JWTProvider JWTProvider) {
+    public JwtAuthenticationFilter(JWTProvider JWTProvider) {
         this.JWTProvider = JWTProvider;
     }
 
