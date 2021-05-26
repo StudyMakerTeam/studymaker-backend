@@ -33,4 +33,6 @@ public class UserStudy {
 
     @OneToMany(mappedBy = "userStudy")
     List<Attendance> attendanceList = new ArrayList<>();
+
+    
 }
