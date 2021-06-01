@@ -35,7 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
-/gradle/wrapper/gradle-wrapper.jar
-/gradle/wrapper/gradle-wrapper.properties
-/gradlew.bat
 /기록지.docx
