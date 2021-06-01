@@ -4,7 +4,11 @@ import com.anytime.studymaker.domain.study.repository.jpa.StudyRepository;
 import com.anytime.studymaker.domain.user.UserStudy;
 import com.anytime.studymaker.domain.user.repository.jpa.UserRepository;
 import com.anytime.studymaker.domain.user.repository.jpa.UserStudyRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
 public class UserStudyServiceImpl implements UserStudyService {
 
     private final UserRepository userRepository;
