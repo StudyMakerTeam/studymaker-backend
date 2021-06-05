@@ -6,6 +6,6 @@
 - back-end : 2명
 
 ##  구조
-- Front-end ; React
-- Back-end : Spring Boot
+- Front-end : React ([Repository](https://github.com/GlassK/study-maker))
+- Back-end : Spring Boot (`Current`)
 - Infra : AWS EC2, RDS, S3(준비중)
