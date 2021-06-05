@@ -1,13 +1,11 @@
 package com.anytime.studymaker.controller;
 
 import com.anytime.studymaker.domain.study.dto.StudyApiRequest;
+import com.anytime.studymaker.domain.study.dto.StudyApiResponse;
 import com.anytime.studymaker.service.study.StudyService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class StudyController {
 
-    public StudyService studyService;
+    public final StudyService studyService;
 
     @PostMapping("/create")
     public ResponseEntity<String> createStudy(@RequestBody StudyApiRequest request) {
@@ -27,4 +25,9 @@ public class StudyController {
         return responseEntity;
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> getStudy(@PathVariable long id) {
+        StudyApiResponse response = studyService.read(id);
+        return ResponseEntity.ok(response);
+    }
 }

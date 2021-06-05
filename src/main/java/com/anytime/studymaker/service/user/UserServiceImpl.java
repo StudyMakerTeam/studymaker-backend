@@ -2,6 +2,7 @@ package com.anytime.studymaker.service.user;
 
 import com.anytime.studymaker.domain.user.Role;
 import com.anytime.studymaker.domain.user.User;
+import com.anytime.studymaker.domain.user.component.Authority;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
 import com.anytime.studymaker.domain.user.repository.jpa.RoleRepository;
@@ -32,7 +33,9 @@ public class UserServiceImpl implements UserService {
     public void create(UserApiRequest userApiRequest, PasswordEncoder passwordEncoder) {
         userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
         User user = userRepository.save(userApiRequest.toEntity());
-        Role role = Role.builder().role(userApiRequest.getRole()).user(user).build();
+
+        Role role = Role.builder().user(user).build();
+        role.setAuthority(Authority.ROLE_USER);
         roleRepository.save(role);
     }
 
