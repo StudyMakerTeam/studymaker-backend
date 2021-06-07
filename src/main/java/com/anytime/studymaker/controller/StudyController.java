@@ -25,7 +25,24 @@ public class StudyController {
         return responseEntity;
     }
 
-    @GetMapping("{id}")
+    @PatchMapping("/update")
+    public ResponseEntity<String> updateStudy(@RequestBody StudyApiRequest request){
+
+        studyService.update(request);
+
+        ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 수정되었습니다.");
+        return responseEntity;
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteStudy(@RequestBody StudyApiRequest request){
+        studyService.delete(request.getStudyId());
+
+        ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 삭제되었습니다.");
+        return responseEntity;
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<?> getStudy(@PathVariable long id) {
         StudyApiResponse response = studyService.read(id);
         return ResponseEntity.ok(response);
