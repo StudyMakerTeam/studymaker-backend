@@ -26,4 +26,8 @@ public interface UserService extends UserDetailsService {
     boolean existEmail(String email);
 
     boolean existNickname(String nickname);
+
+    void changePassword(UserApiRequest reques, PasswordEncoder passwordEncoder);
+
+    Long getUserIdByEmail(String email);
 }
