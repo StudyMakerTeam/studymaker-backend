@@ -31,7 +31,7 @@ public class UserStudy {
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
 
-    @OneToMany(mappedBy = "userStudy")
+    @OneToMany(mappedBy = "userStudy", cascade = CascadeType.REMOVE)
     List<Attendance> attendanceList = new ArrayList<>();
 
     

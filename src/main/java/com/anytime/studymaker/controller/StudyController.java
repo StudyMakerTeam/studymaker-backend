@@ -36,6 +36,15 @@ public class StudyController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteStudy(@RequestBody StudyApiRequest request){
+
+        
+
+        // 출석부 삭제 -> 게시판 삭제 -> 유저스터디 삭제 -> 스터디 삭제
+        // => 스터디를 삭제하면, 유저 스터디도 삭제
+        // => 유저 스터디를 삭제하면 -> 출석부/ 게시글(판) 삭제
+
+        
+     
         studyService.delete(request.getStudyId());
 
         ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 삭제되었습니다.");

@@ -41,7 +41,7 @@ public class Study {
     @ManyToOne(fetch = FetchType.EAGER)
     private Region region;
 
-    @OneToMany(mappedBy = "study")
+    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE)
     List<UserStudy> userStudyList = new ArrayList<>();
 
     public StudyApiResponse toApiResponse() {

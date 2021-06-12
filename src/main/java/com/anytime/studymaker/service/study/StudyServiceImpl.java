@@ -35,7 +35,7 @@ public class StudyServiceImpl implements StudyService {
     public void create(StudyApiRequest studyApiRequest) {
         User user = User.builder().userId(studyApiRequest.getUserId()).build();
 
-        // statusId 0: 방장, 1: 부방장, 2: 일반 회원, 3: 추방된 회원
+        // statusId 1: 방장, 2: 부방장, 3: 일반 회원, 4: 추방된 회원
         Status status = Status.builder().statusId(0l).build();
 
         Study study = studyRepository.save(studyApiRequest.toEntity());
@@ -90,9 +90,13 @@ public class StudyServiceImpl implements StudyService {
 
     }
 
-    @Transactional
+    
     @Override
     public void delete(Long id) {
+        
+        // 유저스터디 삭제
+        
+        
         studyRepository.deleteById(id);
     }
 }
