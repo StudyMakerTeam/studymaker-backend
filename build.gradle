@@ -39,6 +39,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     // compile group: 'org.apache.commons', name: 'commons-lang3'
     implementation "org.apache.commons:commons-lang3"
+ //   compile "com.sun.mail:javax.mail"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
