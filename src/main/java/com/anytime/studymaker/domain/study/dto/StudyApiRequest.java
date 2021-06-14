@@ -18,6 +18,7 @@ import com.anytime.studymaker.domain.study.Study;
 @Accessors(chain = true)
 @Data
 public class StudyApiRequest {
+    private Long studyId;
     private String studyName;
     private Integer studyMaximum;
     private String studySummary;
@@ -38,7 +39,7 @@ public class StudyApiRequest {
         Region region = Region.builder().regionId(regionId).build();
 
         return Study.builder().studyName(studyName).studyMaximum(studyMaximum).studySummary(studySummary)
-                .studySummary(studySummary).studyDescription(studyDescription).studyImage(studyImage)
-                .studyStatus(studyStatus).studyType(studyType).category(category).region(region).createAt(LocalDateTime.now()).build();
+                .studyDescription(studyDescription).studyImage(studyImage).studyStatus(studyStatus).studyType(studyType)
+                .category(category).region(region).createAt(LocalDateTime.now()).build();
     }
 }
