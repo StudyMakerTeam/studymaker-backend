@@ -1,0 +1,79 @@
+.container {
+  display: grid;
+  place-items: center;
+  margin-top: 80px;
+  grid-template-rows: 50px 200px 0px 100px;
+}
+
+.form {
+  display: grid;
+}
+
+label {
+  font-size: 15px;
+}
+
+.form > div {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.input {
+  font-size: 15px;
+  border: 0.7px solid #a6a3a3;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  color: #000;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 13px;
+}
+
+.noError {
+  opacity: 0;
+  font-size: 13px;
+}
+
+#buttons {
+  display: inline-block;
+  text-align: center;
+}
+
+#signInButton {
+  font-size: 15px;
+  padding: 10px;
+  width: 300px;
+  cursor: pointer;
+  background: #3c91e6;
+  color: #fff;
+  box-shadow: 0 3px 7px 0 #dbdbdb;
+}
+
+.findInfoMenu {
+  margin-left: 140px;
+}
+
+.findInfo {
+  cursor: pointer;
+  color: #7e7e7e;
+}
+
+.findInfo:link,
+.findInfo:visited,
+.findInfo:hover,
+.findInfo:active {
+  color: #3c91e6;
+}
+
+.signUpQuest {
+  color: #7e7e7e;
+}
+
+.signUp {
+  text-decoration: underline;
+  font-weight: 700;
+  color: #3c91e6;
+}
