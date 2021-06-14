@@ -3,10 +3,10 @@ package com.anytime.studymaker;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class StudymakerApplicationTests {
 
-    @Test
+//    @Test
     void contextLoads() {
     }
 

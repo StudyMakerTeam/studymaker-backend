@@ -9,7 +9,6 @@ public interface StudyService {
     @Secured("ROLE_USER")
     void create(StudyApiRequest studyApiRequest);
 
-    @Secured("ROLE_USER")
     StudyApiResponse read(Long id);
 
     @Secured("ROLE_USER")

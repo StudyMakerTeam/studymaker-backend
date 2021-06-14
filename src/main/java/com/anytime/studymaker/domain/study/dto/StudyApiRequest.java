@@ -1,5 +1,7 @@
 package com.anytime.studymaker.domain.study.dto;
 
+import com.anytime.studymaker.domain.study.Category;
+import com.anytime.studymaker.domain.study.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,7 @@ import com.anytime.studymaker.domain.study.Study;
 @Accessors(chain = true)
 @Data
 public class StudyApiRequest {
-    private Long userId;
+    private Long studyId;
     private String studyName;
     private Integer studyMaximum;
     private String studySummary;
@@ -24,12 +26,20 @@ public class StudyApiRequest {
     private String studyImage;
     private Boolean studyStatus;
     private Boolean studyType;
+
+    private Long userId;
+    private Long regionId;
+    private Long categoryId;
+
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
     public Study toEntity() {
+        Category category = Category.builder().categoryId(categoryId).build();
+        Region region = Region.builder().regionId(regionId).build();
+
         return Study.builder().studyName(studyName).studyMaximum(studyMaximum).studySummary(studySummary)
-                .studySummary(studySummary).studyDescription(studyDescription).studyImage(studyImage)
-                .studyStatus(studyStatus).studyType(studyType).createAt(LocalDateTime.now()).build();
+                .studyDescription(studyDescription).studyImage(studyImage).studyStatus(studyStatus).studyType(studyType)
+                .category(category).region(region).createAt(LocalDateTime.now()).build();
     }
 }

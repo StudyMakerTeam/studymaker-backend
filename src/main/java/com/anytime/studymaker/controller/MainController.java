@@ -5,9 +5,11 @@ import java.util.Map;
 
 import com.anytime.studymaker.config.jwt.Token;
 import com.anytime.studymaker.config.jwt.JWTProvider;
+import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.dto.LoginDto;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.service.user.UserService;
+import com.anytime.studymaker.service.util.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +31,8 @@ import javax.validation.Valid;
 public class MainController {
 
     private final UserService userService;
+    private final MailService mailService;
+
     private final JWTProvider JWTProvider;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -69,5 +73,29 @@ public class MainController {
         String nickname = (String) request.get("nickname");
         boolean result = userService.existNickname(nickname);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/find-my-password")
+    public ResponseEntity<?> findMyPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        
+        if (userService.existEmail(email)) {
+            mailService.sendAuthenticationMail(email);
+            return ResponseEntity.status(HttpStatus.OK).body("입력하신 이메일에 비밀번호 변경 링크를 발송했습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("찾으시는 계정이 존재하지 않습니다.");
+        }
+    }
+
+    @GetMapping("/initialization/{email}")
+    public ResponseEntity<?> getinitializationInfo(@PathVariable String email) {
+        Long userId = userService.getUserIdByEmail(email);
+        return ResponseEntity.ok().body(userId);
+    }
+
+    @PostMapping("/initialize-password")
+    public ResponseEntity<?> initializePassword(@RequestBody UserApiRequest request) {
+        userService.changePassword(request, passwordEncoder);
+        return ResponseEntity.ok().body("비밀번호가 변경되었습니다.");
     }
 }

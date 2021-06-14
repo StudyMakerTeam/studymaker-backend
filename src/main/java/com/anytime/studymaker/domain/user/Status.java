@@ -1,12 +1,11 @@
 package com.anytime.studymaker.domain.user;
 
+import com.anytime.studymaker.domain.user.component.UserStatus;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +16,28 @@ public class Status {
     @Id
     @GeneratedValue
     private Long statusId;
-    private String statusName;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 
     @OneToMany(mappedBy = "status")
     List<UserStudy> userStudyList = new ArrayList<>();
+
+    public static Status builder() {
+        return new Status();
+    }
+
+    public Status statusId(Long statusId) {
+        this.statusId = statusId;
+        return this;
+    }
+
+    public Status userStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+        return this;
+    }
+
+    public Status build() {
+        return this;
+    }
 }

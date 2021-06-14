@@ -1,5 +1,6 @@
 package com.anytime.studymaker.domain.user;
 
+import com.anytime.studymaker.domain.user.component.Authority;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -16,17 +17,19 @@ public class Role implements GrantedAuthority {
     @GeneratedValue
     private Long roleId;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
-    public Role(String role) {
-        this.role = role;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    public Role(Authority authority) {
+        this.authority = authority;
+    }
+
     @Override
     public String getAuthority() {
-        return this.role;
+        return this.authority.getRole();
     }
 }
