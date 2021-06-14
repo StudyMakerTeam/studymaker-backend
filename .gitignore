@@ -37,3 +37,4 @@ out/
 .vscode/
 /기록지.docx
 src/main/resources/application-dev.yml
+src/main/frontend/

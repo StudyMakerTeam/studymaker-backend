@@ -1,5 +1,6 @@
 package com.anytime.studymaker.domain.study;
 
+import com.anytime.studymaker.domain.study.dto.StudyApiRequest;
 import com.anytime.studymaker.domain.study.dto.StudyApiResponse;
 import com.anytime.studymaker.domain.user.UserStudy;
 import com.anytime.studymaker.domain.user.component.UserStatus;
@@ -40,18 +41,24 @@ public class Study {
     @ManyToOne(fetch = FetchType.EAGER)
     private Region region;
 
-    @OneToMany(mappedBy = "study")
+    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE)
     List<UserStudy> userStudyList = new ArrayList<>();
 
     public StudyApiResponse toApiResponse() {
         UserStudy managerInfo = null;
         int numberOfMember = 0;
         for (UserStudy userStudy : userStudyList) {
-            UserStatus status = userStudy.getStatus().getUserStatus();
-            if (status == UserStatus.MANAGER) {
+            // UserStatus status = userStudy.getStatus().getUserStatus();
+            // if (status == UserStatus.MANAGER) {
+            //     managerInfo = userStudy;
+            // }
+            // if (status != UserStatus.BANNED) {
+            //     numberOfMember++;
+            // }
+            if(userStudy.getStatus().getStatusId() == 0){
                 managerInfo = userStudy;
             }
-            if (status != UserStatus.BANNED) {
+            if (userStudy.getStatus().getStatusId() != 3) {
                 numberOfMember++;
             }
         }
@@ -74,5 +81,5 @@ public class Study {
                 .createAt(createAt)
                 .updateAt(updateAt).build();
     }
-
+   
 }
