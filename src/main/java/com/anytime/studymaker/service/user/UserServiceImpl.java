@@ -2,6 +2,7 @@ package com.anytime.studymaker.service.user;
 
 import com.anytime.studymaker.domain.user.Role;
 import com.anytime.studymaker.domain.user.User;
+import com.anytime.studymaker.domain.user.component.Authority;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.domain.user.dto.UserApiResponse;
 import com.anytime.studymaker.domain.user.repository.jpa.RoleRepository;
@@ -32,7 +33,9 @@ public class UserServiceImpl implements UserService {
     public void create(UserApiRequest userApiRequest, PasswordEncoder passwordEncoder) {
         userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
         User user = userRepository.save(userApiRequest.toEntity());
-        Role role = Role.builder().role(userApiRequest.getRole()).user(user).build();
+
+        Role role = Role.builder().user(user).build();
+        role.setAuthority(Authority.ROLE_USER);
         roleRepository.save(role);
     }
 
@@ -43,8 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserApiResponse update(UserApiRequest userApiRequest) {
-//        todo : 사용자 정보 수정
-        return null;
+        User updatedUser = userRepository.save(userApiRequest.toEntity());
+        return updatedUser.toApiResponse();
     }
 
     @Override
@@ -60,5 +63,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void changePassword(UserApiRequest request, PasswordEncoder passwordEncoder) {
+        User user = User.builder().userId(request.getUserId())
+                .password(passwordEncoder.encode(request.getPassword())).build();
+        userRepository.save(user);
+    }
+
+    @Override
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findByEmail(email).map(user -> user.getUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 }

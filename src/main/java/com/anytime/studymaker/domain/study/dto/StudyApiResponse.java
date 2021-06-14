@@ -22,6 +22,17 @@ public class StudyApiResponse {
     private String studyImage;
     private Boolean studyStatus;
     private Boolean studyType;
+
+    private Long managerId;
+    private String manager;
+    private Integer numberOfMember;
+
+    private Long regionId;
+    private String region;
+
+    private Long categoryId;
+    private String category;
+
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }
