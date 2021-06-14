@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserApiResponse update(UserApiRequest userApiRequest) {
-//        todo : 사용자 정보 수정
-        return null;
+        User updatedUser = userRepository.save(userApiRequest.toEntity());
+        return updatedUser.toApiResponse();
     }
 
     @Override
@@ -63,5 +63,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void changePassword(UserApiRequest request, PasswordEncoder passwordEncoder) {
+        User user = User.builder().userId(request.getUserId())
+                .password(passwordEncoder.encode(request.getPassword())).build();
+        userRepository.save(user);
+    }
+
+    @Override
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findByEmail(email).map(user -> user.getUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 }

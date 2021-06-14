@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class UserApiRequest {
 
+    private Long userId;
     private String email;
     private String name;
     private String nickname;
