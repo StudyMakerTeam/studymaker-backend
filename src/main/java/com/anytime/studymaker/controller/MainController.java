@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.anytime.studymaker.config.jwt.Token;
 import com.anytime.studymaker.config.jwt.JWTProvider;
-import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.dto.LoginDto;
 import com.anytime.studymaker.domain.user.dto.UserApiRequest;
 import com.anytime.studymaker.service.user.UserService;
@@ -61,14 +60,14 @@ public class MainController {
         return new ResponseEntity<Token>(token, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/check-email")
+    @PostMapping("/check-email")
     public ResponseEntity<?> checkEmail(@RequestBody Map<String, Object> request) {
         String email = (String) request.get("email");
         boolean result = userService.existEmail(email);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/check-nickname")
+    @PostMapping("/check-nickname")
     public ResponseEntity<?> checkNickname(@RequestBody Map<String, Object> request) {
         String nickname = (String) request.get("nickname");
         boolean result = userService.existNickname(nickname);
