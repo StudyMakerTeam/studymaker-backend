@@ -20,7 +20,7 @@ import java.util.*;
 @Builder
 @Data
 @Accessors(chain = true)
-@ToString(exclude = "roleList")
+@ToString(exclude = "rolesList")
 @Entity
 public class User implements UserDetails {
     @Id
@@ -44,11 +44,11 @@ public class User implements UserDetails {
     List<Reply> replyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<Role> roleList = new ArrayList<>();
+    List<Roles> rolesList = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roleList;
+        return this.rolesList;
     }
 
     @Override

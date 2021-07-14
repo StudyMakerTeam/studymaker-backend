@@ -1,6 +1,6 @@
 package com.anytime.studymaker.config.jwt;
 
-import com.anytime.studymaker.domain.user.Role;
+import com.anytime.studymaker.domain.user.Roles;
 import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.component.Authority;
 import io.jsonwebtoken.*;
@@ -67,13 +67,13 @@ public class JWTProvider implements TokenProvider {
         String[] authorities = claims.get(AUTHORITY_KEY, String.class).split(", ");
         Collection<GrantedAuthority> authoritySet = new HashSet<>();
         for (String authority : authorities) {
-            Role role = new Role();
+            Roles roles = new Roles();
             if (authority.equals(Authority.ROLE_USER.getRole())) {
-                role.setAuthority(Authority.ROLE_USER);
+                roles.setAuthority(Authority.ROLE_USER);
             } else {
-                role.setAuthority(Authority.ROLE_ADMIN);
+                roles.setAuthority(Authority.ROLE_ADMIN);
             }
-            authoritySet.add(role);
+            authoritySet.add(roles);
         }
         User user = User.builder().email(claims.getSubject()).userId(claims.get("userId", Long.class)).build();
         return new UsernamePasswordAuthenticationToken(user, null, authoritySet);

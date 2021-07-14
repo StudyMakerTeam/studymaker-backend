@@ -36,7 +36,7 @@ public class MainController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @GetMapping("/main")
+    @GetMapping
     public String hello() {
         return "안녕하세요. 현재 서버시간은 " + new Date() + "입니다. \n";
     }
