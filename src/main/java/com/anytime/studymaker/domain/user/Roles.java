@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Builder
 @ToString(exclude = "user")
 @Entity
-public class Role implements GrantedAuthority {
+public class Roles implements GrantedAuthority {
+
     @Id
     @GeneratedValue
     private Long roleId;
@@ -24,7 +25,7 @@ public class Role implements GrantedAuthority {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public Role(Authority authority) {
+    public Roles(Authority authority) {
         this.authority = authority;
     }
 
