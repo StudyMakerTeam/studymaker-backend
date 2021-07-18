@@ -6,13 +6,13 @@ import javax.transaction.Transactional;
 import com.anytime.studymaker.domain.study.Study;
 import com.anytime.studymaker.controller.dto.StudyApiRequest;
 import com.anytime.studymaker.controller.dto.StudyApiResponse;
-import com.anytime.studymaker.domain.study.repository.jpa.CategoryRepository;
-import com.anytime.studymaker.domain.study.repository.jpa.RegionRepository;
-import com.anytime.studymaker.domain.study.repository.jpa.StudyRepository;
+import com.anytime.studymaker.domain.study.repository.CategoryRepository;
+import com.anytime.studymaker.domain.study.repository.RegionRepository;
+import com.anytime.studymaker.domain.study.repository.StudyRepository;
 import com.anytime.studymaker.domain.user.Status;
 import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.UserStudy;
-import com.anytime.studymaker.domain.user.repository.jpa.UserStudyRepository;
+import com.anytime.studymaker.domain.user.repository.UserStudyRepository;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
