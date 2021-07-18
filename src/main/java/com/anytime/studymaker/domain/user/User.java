@@ -2,7 +2,7 @@ package com.anytime.studymaker.domain.user;
 
 import com.anytime.studymaker.domain.study.Reply;
 import com.anytime.studymaker.domain.study.StudyBoard;
-import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserApiResponse;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;

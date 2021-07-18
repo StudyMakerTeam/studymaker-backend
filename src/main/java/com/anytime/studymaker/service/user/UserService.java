@@ -1,8 +1,8 @@
 package com.anytime.studymaker.service.user;
 
 import com.anytime.studymaker.domain.user.User;
-import com.anytime.studymaker.domain.user.dto.UserApiRequest;
-import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserApiRequest;
+import com.anytime.studymaker.controller.dto.UserApiResponse;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

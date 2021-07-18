@@ -1,7 +1,7 @@
 package com.anytime.studymaker.service.study;
 
-import com.anytime.studymaker.domain.study.dto.StudyApiRequest;
-import com.anytime.studymaker.domain.study.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyApiRequest;
+import com.anytime.studymaker.controller.dto.StudyApiResponse;
 import org.springframework.security.access.annotation.Secured;
 
 public interface StudyService {

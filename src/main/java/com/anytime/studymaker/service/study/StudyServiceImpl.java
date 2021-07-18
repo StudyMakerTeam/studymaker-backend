@@ -4,8 +4,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import com.anytime.studymaker.domain.study.Study;
-import com.anytime.studymaker.domain.study.dto.StudyApiRequest;
-import com.anytime.studymaker.domain.study.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyApiRequest;
+import com.anytime.studymaker.controller.dto.StudyApiResponse;
 import com.anytime.studymaker.domain.study.repository.jpa.CategoryRepository;
 import com.anytime.studymaker.domain.study.repository.jpa.RegionRepository;
 import com.anytime.studymaker.domain.study.repository.jpa.StudyRepository;

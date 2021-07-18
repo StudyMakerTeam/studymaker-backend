@@ -1,9 +1,7 @@
 package com.anytime.studymaker.domain.study;
 
-import com.anytime.studymaker.domain.study.dto.StudyApiRequest;
-import com.anytime.studymaker.domain.study.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyApiResponse;
 import com.anytime.studymaker.domain.user.UserStudy;
-import com.anytime.studymaker.domain.user.component.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

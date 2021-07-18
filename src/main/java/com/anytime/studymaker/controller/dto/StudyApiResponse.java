@@ -1,4 +1,4 @@
-package com.anytime.studymaker.domain.study.dto;
+package com.anytime.studymaker.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
