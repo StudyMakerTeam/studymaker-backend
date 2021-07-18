@@ -1,4 +1,4 @@
-package com.anytime.studymaker.domain.study.dto;
+package com.anytime.studymaker.controller.dto;
 
 import com.anytime.studymaker.domain.study.Category;
 import com.anytime.studymaker.domain.study.Region;

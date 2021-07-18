@@ -1,4 +1,4 @@
-package com.anytime.studymaker.domain.user.dto;
+package com.anytime.studymaker.controller.dto;
 
 import com.anytime.studymaker.domain.user.User;
 import lombok.*;

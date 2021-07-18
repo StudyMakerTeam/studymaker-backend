@@ -1,7 +1,7 @@
 package com.anytime.studymaker.controller;
 
-import com.anytime.studymaker.domain.user.dto.UserApiRequest;
-import com.anytime.studymaker.domain.user.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserApiRequest;
+import com.anytime.studymaker.controller.dto.UserApiResponse;
 import com.anytime.studymaker.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

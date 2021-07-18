@@ -5,8 +5,9 @@ import java.util.Map;
 
 import com.anytime.studymaker.config.jwt.Token;
 import com.anytime.studymaker.config.jwt.JWTProvider;
-import com.anytime.studymaker.domain.user.dto.LoginDto;
-import com.anytime.studymaker.domain.user.dto.UserApiRequest;
+import com.anytime.studymaker.controller.dto.DuplicateCheckerDto;
+import com.anytime.studymaker.controller.dto.LoginDto;
+import com.anytime.studymaker.controller.dto.UserApiRequest;
 import com.anytime.studymaker.service.user.UserService;
 import com.anytime.studymaker.service.util.MailService;
 import lombok.RequiredArgsConstructor;
@@ -64,14 +65,16 @@ public class MainController {
     public ResponseEntity<?> checkEmail(@RequestBody Map<String, Object> request) {
         String email = (String) request.get("email");
         boolean result = userService.existEmail(email);
-        return ResponseEntity.ok(result);
+        DuplicateCheckerDto checkerDto = new DuplicateCheckerDto(result);
+        return ResponseEntity.ok(checkerDto);
     }
 
     @PostMapping("/check-nickname")
     public ResponseEntity<?> checkNickname(@RequestBody Map<String, Object> request) {
         String nickname = (String) request.get("nickname");
         boolean result = userService.existNickname(nickname);
-        return ResponseEntity.ok(result);
+        DuplicateCheckerDto checkerDto = new DuplicateCheckerDto(result);
+        return ResponseEntity.ok(checkerDto);
     }
 
     @PostMapping("/find-my-password")
