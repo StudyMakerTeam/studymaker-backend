@@ -1,4 +1,4 @@
-package com.anytime.studymaker.domain.study.repository.jpa;
+package com.anytime.studymaker.domain.study.repository;
 
 import java.util.Optional;
 
