@@ -1,12 +1,13 @@
 package com.anytime.studymaker.controller.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class DuplicateCheckerDto {
-    public boolean result;
+public class FindMyResponse {
+
+    private Long response;
 }

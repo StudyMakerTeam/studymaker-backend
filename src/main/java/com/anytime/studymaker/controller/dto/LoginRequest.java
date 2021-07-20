@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Builder
 @Accessors(chain = true)
 @Data
-public class LoginDto {
+public class LoginRequest {
 
     @NotNull
     @Size(min = 3, max = 100)

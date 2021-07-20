@@ -1,8 +1,9 @@
-package com.anytime.studymaker.config.jwt;
+package com.anytime.studymaker.auth.jwt;
 
-import com.anytime.studymaker.domain.user.Roles;
+import com.anytime.studymaker.domain.role.Roles;
 import com.anytime.studymaker.domain.user.User;
-import com.anytime.studymaker.domain.user.component.Authority;
+import com.anytime.studymaker.domain.role.Authority;
+import com.anytime.studymaker.domain.user.cache.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class JWTProvider implements TokenProvider {
     private static final String AUTHORITY_KEY = "authority";
+    private static final String BEARER_TYPE = "Bearer ";
 
     private Key key;
 
@@ -40,24 +42,15 @@ public class JWTProvider implements TokenProvider {
     }
 
     @Override
-    public String createToken(Authentication authentication) {
+    public Token publishToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        String authoritySet = user.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(", "));
 
-        long now = new Date().getTime();
-        Date validity = new Date(now + this.tokenValidityTimeLimit);
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .setIssuer(issuer)
-                .setExpiration(validity)
-                .claim("userId", user.getUserId())
-                .claim("username", user.getName())
-                .claim("nickname", user.getNickname())
-                .claim(AUTHORITY_KEY, authoritySet)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+        String access = createAccessToken(user);
+        String refresh = createRefreshToken(user);
+
+        return Token.builder()
+                .accessToken(access).refreshToken(refresh)
+                .userId(user.getUserId()).build();
     }
 
     @Override
@@ -77,6 +70,36 @@ public class JWTProvider implements TokenProvider {
         }
         User user = User.builder().email(claims.getSubject()).userId(claims.get("userId", Long.class)).build();
         return new UsernamePasswordAuthenticationToken(user, null, authoritySet);
+    }
+
+
+    @Override
+    public String createAccessToken(User user) {
+        long now = System.currentTimeMillis();
+        Date validity = new Date(now + this.tokenValidityTimeLimit);
+        String authoritySet = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
+
+        return BEARER_TYPE + Jwts.builder()
+                .setSubject(user.getEmail())
+                .setIssuer(issuer)
+                .setExpiration(validity)
+                .claim(AUTHORITY_KEY, authoritySet)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    @Override
+    public String createRefreshToken(User user) {
+        long now = System.currentTimeMillis();
+        Date validity = new Date(now + this.tokenValidityTimeLimit);
+        return BEARER_TYPE + Jwts.builder()
+                .setSubject(user.getEmail())
+                .setIssuer(issuer)
+                .setExpiration(validity)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
     }
 
     @Override

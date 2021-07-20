@@ -1,7 +1,8 @@
 package com.anytime.studymaker.config;
 
-import com.anytime.studymaker.config.jwt.*;
-import com.anytime.studymaker.service.user.UserService;
+import com.anytime.studymaker.auth.AuthService;
+import com.anytime.studymaker.auth.jwt.*;
+import com.anytime.studymaker.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +26,9 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final AuthService authService;
     private final CorsFilter corsFilter;
-    private final JWTProvider JWTProvider;
+    private final com.anytime.studymaker.auth.jwt.JWTProvider JWTProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -53,17 +55,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .formLogin().disable()
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/user/**").authenticated()
                 .anyRequest().permitAll()
+
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
+
                 .and()
                 .addFilter(corsFilter)
-                .addFilterBefore(new JwtAuthenticationFilter(JWTProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(authService, JWTProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }
