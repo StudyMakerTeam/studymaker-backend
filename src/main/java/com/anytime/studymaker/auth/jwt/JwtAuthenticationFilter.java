@@ -19,12 +19,11 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String REFRESH_TOKEN = "Refresh";
 
     private final AuthService authService;
-    private final JWTProvider JWTProvider;
+    private final TokenProvider tokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -32,8 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String refresh = request.getHeader(REFRESH_TOKEN);
         String requestUri = request.getRequestURI();
 
-        if (StringUtils.hasText(access) && JWTProvider.validateToken(access)) {
-            Authentication authentication = JWTProvider.getAuthentication(access);
+        if (StringUtils.hasText(access) && tokenProvider.validateToken(access)) {
+            Authentication authentication = tokenProvider.getAuthentication(access);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("Security Context에 '{}' 인증 정보를 저장했습니다. URI : {}", authentication.getName(), requestUri);
         } else if (Objects.nonNull(refresh)) {

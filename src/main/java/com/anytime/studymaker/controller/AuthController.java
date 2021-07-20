@@ -2,21 +2,15 @@ package com.anytime.studymaker.controller;
 
 import java.util.Date;
 
-import com.anytime.studymaker.controller.dto.TokenDto;
-import com.anytime.studymaker.auth.jwt.JWTProvider;
+import com.anytime.studymaker.auth.AuthService;
 import com.anytime.studymaker.controller.dto.*;
-import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.UserService;
-import com.anytime.studymaker.domain.user.cache.Token;
 import com.anytime.studymaker.util.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +21,13 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 @RestController
 public class AuthController {
-
+    private final AuthService authService;
     private final UserService userService;
     private final MailService mailService;
 
-    private final JWTProvider JWTProvider;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+
 
     @GetMapping
     public String hello() {
@@ -47,22 +41,8 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        User user = (User) authentication.getDetails();
-        Token jwt = JWTProvider.publishToken(authentication);
-        TokenDto tokenDto = TokenDto.builder()
-                .access(jwt.getAccessToken()).refresh(jwt.getRefreshToken())
-                .build();
-
-        LoginResponse response = LoginResponse.builder()
-                .token(tokenDto).email(user.getEmail())
-                .name(user.getName()).nickname(user.getNickname())
-                .userId(user.getUserId()).build();
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = authService.signIn(request, authenticationManager);
         return ResponseEntity.ok(response);
     }
 

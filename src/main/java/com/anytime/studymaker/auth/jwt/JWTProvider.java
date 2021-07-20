@@ -4,8 +4,10 @@ import com.anytime.studymaker.domain.role.Roles;
 import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.role.Authority;
 import com.anytime.studymaker.domain.user.cache.Token;
+import com.anytime.studymaker.domain.user.cache.TokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +21,13 @@ import java.util.stream.Collectors;
 
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class JWTProvider implements TokenProvider {
+    private final TokenRepository tokenRepository;
+
     private static final String AUTHORITY_KEY = "authority";
     private static final String BEARER_TYPE = "Bearer ";
-
-    private Key key;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -34,6 +37,8 @@ public class JWTProvider implements TokenProvider {
 
     @Value("${jwt.tokenValidityTimeLimit}")
     private long tokenValidityTimeLimit;
+
+    private Key key;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -48,9 +53,9 @@ public class JWTProvider implements TokenProvider {
         String access = createAccessToken(user);
         String refresh = createRefreshToken(user);
 
-        return Token.builder()
-                .accessToken(access).refreshToken(refresh)
-                .userId(user.getUserId()).build();
+        return tokenRepository.save(Token.builder()
+                        .accessToken(access).refreshToken(refresh)
+                        .userId(user.getUserId()).build());
     }
 
     @Override
