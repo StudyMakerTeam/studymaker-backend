@@ -1,6 +1,6 @@
 package com.anytime.studymaker.controller.dto;
 
-import com.anytime.studymaker.domain.study.Category;
+import com.anytime.studymaker.domain.category.Category;
 import com.anytime.studymaker.domain.study.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

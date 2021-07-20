@@ -2,7 +2,7 @@ package com.anytime.studymaker.controller;
 
 import com.anytime.studymaker.controller.dto.UserApiRequest;
 import com.anytime.studymaker.controller.dto.UserApiResponse;
-import com.anytime.studymaker.service.user.UserService;
+import com.anytime.studymaker.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

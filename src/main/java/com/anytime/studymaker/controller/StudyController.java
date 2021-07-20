@@ -2,7 +2,7 @@ package com.anytime.studymaker.controller;
 
 import com.anytime.studymaker.controller.dto.StudyApiRequest;
 import com.anytime.studymaker.controller.dto.StudyApiResponse;
-import com.anytime.studymaker.service.study.StudyService;
+import com.anytime.studymaker.domain.study.StudyService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
