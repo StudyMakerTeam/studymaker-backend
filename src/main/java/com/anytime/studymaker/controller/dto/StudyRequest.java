@@ -17,7 +17,7 @@ import com.anytime.studymaker.domain.study.Study;
 @Builder
 @Accessors(chain = true)
 @Data
-public class StudyApiRequest {
+public class StudyRequest {
     private Long studyId;
     private String studyName;
     private Integer studyMaximum;

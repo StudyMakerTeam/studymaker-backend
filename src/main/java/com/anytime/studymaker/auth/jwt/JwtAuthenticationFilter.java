@@ -1,7 +1,7 @@
 package com.anytime.studymaker.auth.jwt;
 
 import com.anytime.studymaker.auth.AuthService;
-import com.anytime.studymaker.controller.dto.TokenDto;
+import com.anytime.studymaker.controller.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("Security Context에 '{}' 인증 정보를 저장했습니다. URI : {}", authentication.getName(), requestUri);
         } else if (Objects.nonNull(refresh)) {
-            TokenDto token = authService.reissueToken(refresh);
+            TokenResponse token = authService.reissueToken(refresh);
             response.addHeader(AUTHORIZATION_HEADER, token.getAccess());
             response.addHeader(REFRESH_TOKEN, token.getRefresh());
         } else {

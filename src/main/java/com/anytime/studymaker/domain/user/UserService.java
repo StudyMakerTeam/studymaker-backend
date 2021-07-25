@@ -1,24 +1,22 @@
 package com.anytime.studymaker.domain.user;
 
-import com.anytime.studymaker.domain.user.User;
-import com.anytime.studymaker.controller.dto.UserApiRequest;
-import com.anytime.studymaker.controller.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserRequest;
+import com.anytime.studymaker.controller.dto.UserResponse;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService extends UserDetailsService {
     @Override
     User loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    void create(UserApiRequest request, PasswordEncoder passwordEncoder);
+    void create(UserRequest request);
 
     @Secured("ROLE_USER")
-    UserApiResponse read(Long id);
+    UserResponse read(Long id);
 
     @Secured("ROLE_USER")
-    UserApiResponse update(UserApiRequest request);
+    UserResponse update(UserRequest request);
 
     @Secured("ROLE_USER")
     void delete(Long id);
@@ -27,7 +25,7 @@ public interface UserService extends UserDetailsService {
 
     boolean existNickname(String nickname);
 
-    void changePassword(UserApiRequest reques, PasswordEncoder passwordEncoder);
+    void changePassword(UserRequest request);
 
     Long getUserIdByEmail(String email);
 }

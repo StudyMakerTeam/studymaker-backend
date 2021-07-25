@@ -25,7 +25,7 @@ public class AuthController {
     private final UserService userService;
     private final MailService mailService;
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager manager;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -35,26 +35,26 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody UserApiRequest request) {
-        userService.create(request, passwordEncoder);
+    public ResponseEntity<?> signUp(@RequestBody UserRequest request) {
+        userService.create(request);
         return ResponseEntity.ok("회원 가입이 완료되었습니다.");
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest request) {
-        LoginResponse response = authService.signIn(request, authenticationManager);
+    public ResponseEntity<LoginResponse> signIn(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = authService.signIn(request, manager);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/check-email")
-    public ResponseEntity<?> checkEmail(@RequestBody DuplicationRequest request) {
+    public ResponseEntity<DuplicationResponse> checkEmail(@RequestBody DuplicationRequest request) {
         boolean result = userService.existEmail(request.getEmail());
         DuplicationResponse response = DuplicationResponse.builder().result(result).build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/check-nickname")
-    public ResponseEntity<?> checkNickname(@RequestBody DuplicationRequest request) {
+    public ResponseEntity<DuplicationResponse> checkNickname(@RequestBody DuplicationRequest request) {
         boolean result = userService.existNickname(request.getNickname());
         DuplicationResponse response = DuplicationResponse.builder().result(result).build();
         return ResponseEntity.ok(response);
@@ -77,8 +77,14 @@ public class AuthController {
     }
 
     @PostMapping("/initialization")
-    public ResponseEntity<?> initializePassword(@RequestBody UserApiRequest request) {
-        userService.changePassword(request, passwordEncoder);
+    public ResponseEntity<?> initializePassword(@RequestBody UserRequest request) {
+        userService.changePassword(request);
         return ResponseEntity.ok().body("비밀번호가 변경되었습니다.");
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenResponse> refreshToken(@RequestBody TokenRequest request) {
+        TokenResponse response = authService.reissueToken(request.getRefreshToken());
+        return ResponseEntity.ok(response);
     }
 }

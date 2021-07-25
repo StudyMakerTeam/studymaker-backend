@@ -1,8 +1,8 @@
 package com.anytime.studymaker.domain.user;
 
 import com.anytime.studymaker.domain.role.Authority;
-import com.anytime.studymaker.controller.dto.UserApiRequest;
-import com.anytime.studymaker.controller.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserRequest;
+import com.anytime.studymaker.controller.dto.UserResponse;
 import com.anytime.studymaker.domain.role.RoleRepository;
 import com.anytime.studymaker.domain.role.Roles;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //    UserDetailsService
     @Override
@@ -28,9 +29,9 @@ public class UserServiceImpl implements UserService {
 
     //    CrudService
     @Override
-    public void create(UserApiRequest userApiRequest, PasswordEncoder passwordEncoder) {
-        userApiRequest.setPassword(passwordEncoder.encode(userApiRequest.getPassword()));
-        User user = userRepository.save(userApiRequest.toEntity());
+    public void create(UserRequest userRequest) {
+        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        User user = userRepository.save(userRequest.toEntity());
 
         Roles roles = Roles.builder().user(user).build();
         roles.setAuthority(Authority.ROLE_USER);
@@ -38,13 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserApiResponse read(Long id) {
+    public UserResponse read(Long id) {
         return userRepository.findById(id).map(user -> user.toApiResponse()).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 
     @Override
-    public UserApiResponse update(UserApiRequest userApiRequest) {
-        User updatedUser = userRepository.save(userApiRequest.toEntity());
+    public UserResponse update(UserRequest userRequest) {
+        User updatedUser = userRepository.save(userRequest.toEntity());
         return updatedUser.toApiResponse();
     }
 
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(UserApiRequest request, PasswordEncoder passwordEncoder) {
+    public void changePassword(UserRequest request) {
         User user = User.builder().userId(request.getUserId())
                 .password(passwordEncoder.encode(request.getPassword())).build();
         userRepository.save(user);

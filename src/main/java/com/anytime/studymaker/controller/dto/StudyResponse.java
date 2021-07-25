@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @Accessors(chain = true)
 @Data
-public class StudyApiResponse {
+public class StudyResponse {
     private Long studyId;
     private String studyName;
     private Integer studyMaximum;

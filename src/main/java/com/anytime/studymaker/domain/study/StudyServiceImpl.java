@@ -3,8 +3,8 @@ package com.anytime.studymaker.domain.study;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
-import com.anytime.studymaker.controller.dto.StudyApiRequest;
-import com.anytime.studymaker.controller.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyRequest;
+import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.category.CategoryRepository;
 import com.anytime.studymaker.domain.status.Status;
 import com.anytime.studymaker.domain.user.User;
@@ -29,55 +29,55 @@ public class StudyServiceImpl implements StudyService {
     private final UserStudyRepository userStudyRepository;
 
     @Override
-    public void create(StudyApiRequest studyApiRequest) {
-        User user = User.builder().userId(studyApiRequest.getUserId()).build();
+    public void create(StudyRequest studyRequest) {
+        User user = User.builder().userId(studyRequest.getUserId()).build();
 
         // statusId 1: 방장, 2: 부방장, 3: 일반 회원, 4: 추방된 회원
         Status status = Status.builder().statusId(0l).build();
 
-        Study study = studyRepository.save(studyApiRequest.toEntity());
+        Study study = studyRepository.save(studyRequest.toEntity());
         UserStudy userStudy = UserStudy.builder().user(user).study(study).status(status).build();
         userStudyRepository.save(userStudy);
     }
 
     @Override
-    public StudyApiResponse read(Long id) {
+    public StudyResponse read(Long id) {
         return studyRepository.findById(id).map(study -> study.toApiResponse())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 스터디입니다."));
     }
 
     @Override
-    public StudyApiResponse update(StudyApiRequest studyApiRequest) {
+    public StudyResponse update(StudyRequest studyRequest) {
 
-        Optional<Study> Ostudy = studyRepository.findById(studyApiRequest.getStudyId());
+        Optional<Study> Ostudy = studyRepository.findById(studyRequest.getStudyId());
         if (Ostudy.isPresent()) {
             Study study = Ostudy.get();
-            if (StringUtils.isNotBlank(studyApiRequest.getStudyName())) {
-                study.setStudyName(studyApiRequest.getStudyName());
+            if (StringUtils.isNotBlank(studyRequest.getStudyName())) {
+                study.setStudyName(studyRequest.getStudyName());
             }
-            if (StringUtils.isNotBlank(Integer.toString(studyApiRequest.getStudyMaximum()))) {
-                study.setStudyMaximum(studyApiRequest.getStudyMaximum());
+            if (StringUtils.isNotBlank(Integer.toString(studyRequest.getStudyMaximum()))) {
+                study.setStudyMaximum(studyRequest.getStudyMaximum());
             }
-            if (StringUtils.isNotBlank(studyApiRequest.getStudySummary())) {
-                study.setStudySummary(studyApiRequest.getStudySummary());
+            if (StringUtils.isNotBlank(studyRequest.getStudySummary())) {
+                study.setStudySummary(studyRequest.getStudySummary());
             }
-            if (StringUtils.isNotBlank(studyApiRequest.getStudyDescription())) {
-                study.setStudyDescription(studyApiRequest.getStudyDescription());
+            if (StringUtils.isNotBlank(studyRequest.getStudyDescription())) {
+                study.setStudyDescription(studyRequest.getStudyDescription());
             }
-            if (StringUtils.isNotBlank(studyApiRequest.getStudyImage())) {
-                study.setStudyImage(studyApiRequest.getStudyImage());
+            if (StringUtils.isNotBlank(studyRequest.getStudyImage())) {
+                study.setStudyImage(studyRequest.getStudyImage());
             }
-            if (StringUtils.isNotBlank(Boolean.toString(studyApiRequest.getStudyStatus()))) {
-                study.setStudyStatus(studyApiRequest.getStudyStatus());
+            if (StringUtils.isNotBlank(Boolean.toString(studyRequest.getStudyStatus()))) {
+                study.setStudyStatus(studyRequest.getStudyStatus());
             }
-            if (StringUtils.isNotBlank(Boolean.toString(studyApiRequest.getStudyType()))) {
-                study.setStudyType(studyApiRequest.getStudyType());
+            if (StringUtils.isNotBlank(Boolean.toString(studyRequest.getStudyType()))) {
+                study.setStudyType(studyRequest.getStudyType());
             }
-            if (categoryRepository.findById(studyApiRequest.getCategoryId()).isPresent()) {
-                study.setCategory(categoryRepository.getOne(studyApiRequest.getCategoryId()));
+            if (categoryRepository.findById(studyRequest.getCategoryId()).isPresent()) {
+                study.setCategory(categoryRepository.getOne(studyRequest.getCategoryId()));
             }
-            if (regionRepository.findById(studyApiRequest.getStudyId()).isPresent()) {
-                study.setRegion(regionRepository.getOne(studyApiRequest.getRegionId()));
+            if (regionRepository.findById(studyRequest.getStudyId()).isPresent()) {
+                study.setRegion(regionRepository.getOne(studyRequest.getRegionId()));
             }
             studyRepository.save(study);
             return study.toApiResponse();

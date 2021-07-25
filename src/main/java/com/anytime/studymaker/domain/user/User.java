@@ -3,7 +3,7 @@ package com.anytime.studymaker.domain.user;
 import com.anytime.studymaker.domain.role.Roles;
 import com.anytime.studymaker.domain.studyBoard.Reply;
 import com.anytime.studymaker.domain.studyBoard.StudyBoard;
-import com.anytime.studymaker.controller.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserResponse;
 import com.anytime.studymaker.domain.userStudy.UserStudy;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     List<Reply> replyList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     List<Roles> rolesList = new ArrayList<>();
 
     @Override
@@ -80,7 +80,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public UserApiResponse toApiResponse() {
-        return UserApiResponse.builder().email(email).name(name).nickname(nickname).createAt(createAt).updateAt(updateAt).build();
+    public UserResponse toApiResponse() {
+        return UserResponse.builder().email(email).name(name).nickname(nickname).createAt(createAt).updateAt(updateAt).build();
     }
 }

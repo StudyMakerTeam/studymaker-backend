@@ -1,7 +1,9 @@
 package com.anytime.studymaker.controller.dto;
 
-import com.anytime.studymaker.domain.user.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -11,17 +13,11 @@ import java.time.LocalDateTime;
 @Builder
 @Accessors(chain = true)
 @Data
-public class UserApiRequest {
-
-    private Long userId;
+public class UserResponse {
     private String email;
     private String name;
     private String nickname;
     private String password;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-
-    public User toEntity() {
-        return User.builder().email(email).password(password).name(name).nickname(nickname).createAt(LocalDateTime.now()).build();
-    }
 }
