@@ -1,7 +1,7 @@
 package com.anytime.studymaker.controller;
 
-import com.anytime.studymaker.controller.dto.StudyApiRequest;
-import com.anytime.studymaker.controller.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyRequest;
+import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.study.StudyService;
 
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class StudyController {
     public final StudyService studyService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createStudy(@RequestBody StudyApiRequest request) {
+    public ResponseEntity<String> createStudy(@RequestBody StudyRequest request) {
 
         studyService.create(request);
         ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 생성되었습니다.");
@@ -26,7 +26,7 @@ public class StudyController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<String> updateStudy(@RequestBody StudyApiRequest request){
+    public ResponseEntity<String> updateStudy(@RequestBody StudyRequest request){
 
         studyService.update(request);
 
@@ -35,7 +35,7 @@ public class StudyController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteStudy(@RequestBody StudyApiRequest request){
+    public ResponseEntity<String> deleteStudy(@RequestBody StudyRequest request){
 
         
 
@@ -53,7 +53,7 @@ public class StudyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getStudy(@PathVariable long id) {
-        StudyApiResponse response = studyService.read(id);
+        StudyResponse response = studyService.read(id);
         return ResponseEntity.ok(response);
     }
 }

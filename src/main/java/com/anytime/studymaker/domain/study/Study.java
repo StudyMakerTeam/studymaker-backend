@@ -1,6 +1,6 @@
 package com.anytime.studymaker.domain.study;
 
-import com.anytime.studymaker.controller.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.category.Category;
 import com.anytime.studymaker.domain.userStudy.UserStudy;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class Study {
     @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE)
     List<UserStudy> userStudyList = new ArrayList<>();
 
-    public StudyApiResponse toApiResponse() {
+    public StudyResponse toApiResponse() {
         UserStudy managerInfo = null;
         int numberOfMember = 0;
         for (UserStudy userStudy : userStudyList) {
@@ -62,7 +62,7 @@ public class Study {
             }
         }
 
-        return StudyApiResponse.builder()
+        return StudyResponse.builder()
                 .studyId(studyId).studyName(studyName).studyMaximum(studyMaximum)
                 .studySummary(studySummary).studyDescription(studyDescription)
                 .studyImage(studyImage).studyStatus(studyStatus).studyType(studyType)

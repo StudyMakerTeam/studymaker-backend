@@ -3,7 +3,7 @@ package com.anytime.studymaker.auth;
 import com.anytime.studymaker.auth.jwt.TokenProvider;
 import com.anytime.studymaker.controller.dto.LoginRequest;
 import com.anytime.studymaker.controller.dto.LoginResponse;
-import com.anytime.studymaker.controller.dto.TokenDto;
+import com.anytime.studymaker.controller.dto.TokenResponse;
 import com.anytime.studymaker.domain.user.User;
 import com.anytime.studymaker.domain.user.cache.Token;
 import com.anytime.studymaker.domain.user.UserRepository;
@@ -23,38 +23,39 @@ public class AuthServiceImpl implements AuthService {
     private final TokenProvider tokenProvider;
 
     @Override
-    public LoginResponse signIn(LoginRequest request, AuthenticationManager authenticationManager) {
+    public LoginResponse signIn(LoginRequest request, AuthenticationManager manager) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = manager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User user = (User) authentication.getDetails();
+        User user = (User) authentication.getPrincipal();
         Token jwt = tokenProvider.publishToken(authentication);
-        TokenDto tokenDto = TokenDto.builder()
+        TokenResponse tokenResponse = TokenResponse.builder()
                 .access(jwt.getAccessToken()).refresh(jwt.getRefreshToken())
                 .build();
 
         LoginResponse response = LoginResponse.builder()
-                .token(tokenDto).email(user.getEmail())
+                .token(tokenResponse).email(user.getEmail())
                 .name(user.getName()).nickname(user.getNickname())
                 .userId(user.getUserId()).build();
         return response;
     }
 
     @Override
-    public TokenDto reissueToken(String refreshToken) {
-        Token token = tokenRepository.findById(refreshToken).orElseThrow();
-        User user = userRepository.findById(token.getUserId()).orElseThrow();
+    public TokenResponse reissueToken(String refreshToken) {
+        Token outdatedToken = tokenRepository.findById(refreshToken).orElseThrow();
+        User user = userRepository.findById(outdatedToken.getUserId()).orElseThrow();
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), "", user.getAuthorities());
         Token reissuedToken = tokenProvider.publishToken(authentication);
-        tokenRepository.delete(token);
+        tokenRepository.delete(outdatedToken);
+        tokenRepository.save(reissuedToken);
 
-        TokenDto reissuedTokenDto = TokenDto.builder()
+        TokenResponse response = TokenResponse.builder()
                 .access(reissuedToken.getAccessToken())
                 .refresh(reissuedToken.getRefreshToken())
                 .build();
 
-        return reissuedTokenDto;
+        return response;
     }
 }

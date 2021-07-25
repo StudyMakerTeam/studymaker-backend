@@ -1,7 +1,7 @@
 package com.anytime.studymaker.controller;
 
-import com.anytime.studymaker.controller.dto.UserApiRequest;
-import com.anytime.studymaker.controller.dto.UserApiResponse;
+import com.anytime.studymaker.controller.dto.UserRequest;
+import com.anytime.studymaker.controller.dto.UserResponse;
 import com.anytime.studymaker.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
-        UserApiResponse response = userService.read(id);
+        UserResponse response = userService.read(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> updateMe(UserApiRequest request) {
+    public ResponseEntity<?> updateMe(UserRequest request) {
         return ResponseEntity.ok().build();
     }
 }

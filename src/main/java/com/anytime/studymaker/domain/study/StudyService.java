@@ -1,18 +1,18 @@
 package com.anytime.studymaker.domain.study;
 
-import com.anytime.studymaker.controller.dto.StudyApiRequest;
-import com.anytime.studymaker.controller.dto.StudyApiResponse;
+import com.anytime.studymaker.controller.dto.StudyRequest;
+import com.anytime.studymaker.controller.dto.StudyResponse;
 import org.springframework.security.access.annotation.Secured;
 
 public interface StudyService {
 
     @Secured("ROLE_USER")
-    void create(StudyApiRequest studyApiRequest);
+    void create(StudyRequest studyRequest);
 
-    StudyApiResponse read(Long id);
+    StudyResponse read(Long id);
 
     @Secured("ROLE_USER")
-    StudyApiResponse update(StudyApiRequest studyApiRequest);
+    StudyResponse update(StudyRequest studyRequest);
 
     @Secured("ROLE_USER")
     void delete(Long id);
