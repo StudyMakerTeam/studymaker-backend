@@ -1,5 +1,6 @@
 package com.anytime.studymaker.domain.role;
 
+import com.anytime.studymaker.domain.user.User;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Builder
-@ToString(exclude = "User")
+@ToString(exclude = "user")
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -22,7 +23,7 @@ public class Roles implements GrantedAuthority {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private com.anytime.studymaker.domain.user.User user;
+    private User user;
 
     public Roles(Authority authority) {
         this.authority = authority;
