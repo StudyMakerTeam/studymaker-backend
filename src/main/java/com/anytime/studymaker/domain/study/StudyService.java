@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 public interface StudyService {
 
     @Secured("ROLE_USER")
-    void create(StudyRequest studyRequest);
+    Study create(StudyRequest studyRequest);
 
     StudyResponse read(Long id);
 
