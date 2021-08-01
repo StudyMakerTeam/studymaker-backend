@@ -1,10 +1,8 @@
 package com.anytime.studymaker.domain.category;
 
+import com.anytime.studymaker.controller.dto.CategoryResponse;
 import com.anytime.studymaker.domain.study.Study;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
@@ -14,11 +12,12 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 @Accessors(chain = true)
+@ToString(exclude = "studyList")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Category {
     @Id
@@ -28,4 +27,8 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     List<Study> studyList = new ArrayList<>();
+
+    public CategoryResponse toDto() {
+        return CategoryResponse.builder().categoryId(this.categoryId).categoryName(this.categoryName).build();
+    }
 }

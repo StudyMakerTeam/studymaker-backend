@@ -1,20 +1,17 @@
 package com.anytime.studymaker.domain.attendance;
 
 import com.anytime.studymaker.domain.userStudy.UserStudy;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 @Accessors(chain = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Attendance {
     @Id

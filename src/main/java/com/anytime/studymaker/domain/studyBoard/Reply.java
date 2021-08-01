@@ -1,21 +1,17 @@
 package com.anytime.studymaker.domain.studyBoard;
 
-import com.anytime.studymaker.domain.studyBoard.StudyBoard;
 import com.anytime.studymaker.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 @Accessors(chain = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Reply {
     @Id

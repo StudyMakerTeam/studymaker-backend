@@ -3,16 +3,12 @@ package com.anytime.studymaker.controller.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Accessors(chain = true)
 @Data
+@Builder
+@AllArgsConstructor
 public class StudyResponse {
     private Long studyId;
     private String studyName;

@@ -1,8 +1,6 @@
 package com.anytime.studymaker.auth.jwt;
 
-import com.anytime.studymaker.domain.role.Roles;
 import com.anytime.studymaker.domain.user.User;
-import com.anytime.studymaker.domain.role.Authority;
 import com.anytime.studymaker.domain.user.cache.Token;
 import com.anytime.studymaker.domain.user.cache.TokenRepository;
 import io.jsonwebtoken.*;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -63,16 +62,8 @@ public class JWTProvider implements TokenProvider {
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token).getBody();
         String[] authorities = claims.get(AUTHORITY_KEY, String.class).split(", ");
-        Collection<GrantedAuthority> authoritySet = new HashSet<>();
-        for (String authority : authorities) {
-            Roles roles = new Roles();
-            if (authority.equals(Authority.ROLE_USER.getRole())) {
-                roles.setAuthority(Authority.ROLE_USER);
-            } else {
-                roles.setAuthority(Authority.ROLE_ADMIN);
-            }
-            authoritySet.add(roles);
-        }
+        Set<GrantedAuthority> authoritySet = Arrays.stream(authorities).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+
         User user = User.builder().email(claims.getSubject()).userId(claims.get("userId", Long.class)).build();
         return new UsernamePasswordAuthenticationToken(user, null, authoritySet);
     }

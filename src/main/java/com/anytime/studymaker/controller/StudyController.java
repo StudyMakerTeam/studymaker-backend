@@ -4,11 +4,13 @@ import com.anytime.studymaker.controller.dto.StudyRequest;
 import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.study.StudyService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/study")
 @RestController

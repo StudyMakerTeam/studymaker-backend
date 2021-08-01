@@ -16,10 +16,10 @@ import java.util.*;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Accessors(chain = true)
 @ToString(exclude = "rolesList")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User implements UserDetails {
     @Id

@@ -2,17 +2,13 @@ package com.anytime.studymaker.controller.dto;
 
 import com.anytime.studymaker.domain.user.User;
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Accessors(chain = true)
 @Data
+@Builder
+@AllArgsConstructor
 public class UserRequest {
-
     private Long userId;
     private String email;
     private String name;

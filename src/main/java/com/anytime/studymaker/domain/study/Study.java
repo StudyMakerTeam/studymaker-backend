@@ -1,12 +1,10 @@
 package com.anytime.studymaker.domain.study;
 
+import com.anytime.studymaker.controller.dto.StudyRequest;
 import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.category.Category;
 import com.anytime.studymaker.domain.userStudy.UserStudy;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -14,11 +12,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 @Accessors(chain = true)
+@ToString(exclude = "userStudyList")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Study {
     @Id
@@ -40,27 +39,12 @@ public class Study {
     @ManyToOne(fetch = FetchType.EAGER)
     private Region region;
 
-    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     List<UserStudy> userStudyList = new ArrayList<>();
 
     public StudyResponse toApiResponse() {
         UserStudy managerInfo = null;
         int numberOfMember = 0;
-        for (UserStudy userStudy : userStudyList) {
-            // UserStatus status = userStudy.getStatus().getUserStatus();
-            // if (status == UserStatus.MANAGER) {
-            //     managerInfo = userStudy;
-            // }
-            // if (status != UserStatus.BANNED) {
-            //     numberOfMember++;
-            // }
-            if(userStudy.getStatus().getStatusId() == 0){
-                managerInfo = userStudy;
-            }
-            if (userStudy.getStatus().getStatusId() != 3) {
-                numberOfMember++;
-            }
-        }
 
         return StudyResponse.builder()
                 .studyId(studyId).studyName(studyName).studyMaximum(studyMaximum)
@@ -80,5 +64,15 @@ public class Study {
                 .createAt(createAt)
                 .updateAt(updateAt).build();
     }
-   
+
+    public void update(StudyRequest request) {
+        this.category = Category.builder().categoryId(request.getCategoryId()).build();
+        this.studyName = request.getStudyName();
+        this.studyMaximum = request.getStudyMaximum();
+        this.studySummary = request.getStudySummary();
+        this.studyDescription =request.getStudyDescription();
+        this.studyImage = request.getStudyImage();
+        this.studyStatus = request.getStudyStatus();
+        this.studyType = request.getStudyType();
+    }
 }
