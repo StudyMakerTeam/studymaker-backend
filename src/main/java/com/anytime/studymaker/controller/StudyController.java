@@ -2,6 +2,7 @@ package com.anytime.studymaker.controller;
 
 import com.anytime.studymaker.controller.dto.StudyRequest;
 import com.anytime.studymaker.controller.dto.StudyResponse;
+import com.anytime.studymaker.domain.study.Study;
 import com.anytime.studymaker.domain.study.StudyService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,44 +19,35 @@ public class StudyController {
 
     public final StudyService studyService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createStudy(@RequestBody StudyRequest request) {
-
-        studyService.create(request);
-        ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 생성되었습니다.");
-
-        return responseEntity;
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStudy(@PathVariable long id) {
+        Study study = studyService.read(id);
+        StudyResponse response = study.toApiResponse();
+        return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<String> updateStudy(@RequestBody StudyRequest request){
-
-        studyService.update(request);
-
-        ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 수정되었습니다.");
-        return responseEntity;
+    @PostMapping
+    public ResponseEntity<StudyResponse> createStudy(@RequestBody StudyRequest request) {
+        Study study = studyService.create(request);
+        StudyResponse response = study.toApiResponse();
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteStudy(@RequestBody StudyRequest request){
+    @PutMapping
+    public ResponseEntity<StudyResponse> updateStudy(@RequestBody StudyRequest request) {
+        Study study = studyService.update(request);
+        StudyResponse response = study.toApiResponse();
+        return ResponseEntity.ok(response);
+    }
 
-        
-
+    @DeleteMapping
+    public ResponseEntity<String> deleteStudy(@RequestBody StudyRequest request) {
         // 출석부 삭제 -> 게시판 삭제 -> 유저스터디 삭제 -> 스터디 삭제
         // => 스터디를 삭제하면, 유저 스터디도 삭제
         // => 유저 스터디를 삭제하면 -> 출석부/ 게시글(판) 삭제
-
-        
-     
         studyService.delete(request.getStudyId());
 
         ResponseEntity<String> responseEntity = ResponseEntity.ok("스터디가 삭제되었습니다.");
         return responseEntity;
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getStudy(@PathVariable long id) {
-        StudyResponse response = studyService.read(id);
-        return ResponseEntity.ok(response);
     }
 }

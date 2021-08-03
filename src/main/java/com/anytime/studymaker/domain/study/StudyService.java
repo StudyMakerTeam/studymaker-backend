@@ -9,10 +9,10 @@ public interface StudyService {
     @Secured("ROLE_USER")
     Study create(StudyRequest studyRequest);
 
-    StudyResponse read(Long id);
+    Study read(Long id);
 
     @Secured("ROLE_USER")
-    StudyResponse update(StudyRequest studyRequest);
+    Study update(StudyRequest studyRequest);
 
     @Secured("ROLE_USER")
     void delete(Long id);

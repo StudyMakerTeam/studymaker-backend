@@ -4,7 +4,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import com.anytime.studymaker.controller.dto.StudyRequest;
-import com.anytime.studymaker.controller.dto.StudyResponse;
 import com.anytime.studymaker.domain.category.Category;
 import com.anytime.studymaker.domain.category.CategoryRepository;
 import com.anytime.studymaker.domain.userStudy.UserStatus;
@@ -39,19 +38,17 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyResponse read(Long id) {
-        return studyRepository.findById(id).map(Study::toApiResponse)
+    public Study read(Long id) {
+        return studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(StudymakerMessages.Study.STUDY_NOT_FOUND));
     }
 
     @Override
-    public StudyResponse update(StudyRequest request) {
+    public Study update(StudyRequest request) {
         Study study = studyRepository.findById(request.getStudyId())
                 .orElseThrow(() -> new EntityNotFoundException(StudymakerMessages.Study.STUDY_NOT_FOUND));
         study.update(request);
-        Study response = studyRepository.save(study);
-
-        return response.toApiResponse();
+        return studyRepository.save(study);
     }
 
     @Override

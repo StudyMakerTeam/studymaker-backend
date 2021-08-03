@@ -17,14 +17,15 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
-        UserResponse response = userService.read(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long userId) {
+        UserResponse response = userService.read(userId);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateMe(UserRequest request) {
-        return ResponseEntity.ok().build();
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponse> updateMe(@PathVariable Long userId, UserRequest request) {
+        UserResponse response = UserResponse.builder().build();
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,11 +1,10 @@
 package com.anytime.studymaker.controller;
 
+import com.anytime.studymaker.controller.dto.ReplyRequest;
+import com.anytime.studymaker.controller.dto.ReplyResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping(value = "/api/reply")
@@ -13,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReplyController {
 
     @PostMapping
-    public ResponseEntity<?> saveReply() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ReplyResponse> saveReply(@RequestBody ReplyRequest request) {
+        ReplyResponse response = ReplyResponse.builder().build();
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getReply() {
-        return ResponseEntity.ok().build();
+    @GetMapping("/{replyId}")
+    public ResponseEntity<ReplyResponse> getReply(@PathVariable Long replyId) {
+        ReplyResponse response = ReplyResponse.builder().build();
+        return ResponseEntity.ok(response);
     }
 }
