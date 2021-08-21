@@ -1,16 +1,20 @@
 package com.anytime.studymaker.domain.user;
 
+import com.anytime.studymaker.controller.dto.UserSearchRequest;
 import com.anytime.studymaker.domain.role.Authority;
 import com.anytime.studymaker.controller.dto.UserRequest;
 import com.anytime.studymaker.controller.dto.UserResponse;
 import com.anytime.studymaker.domain.role.RoleRepository;
 import com.anytime.studymaker.domain.role.Roles;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -38,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse read(Long id) {
-        return userRepository.findById(id).map(user -> user.toApiResponse()).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
+        return userRepository.findById(id).map(User::toApiResponse).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 
     @Override
@@ -71,7 +75,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long getUserIdByEmail(String email) {
-        return userRepository.findByEmail(email).map(user -> user.getUserId())
+        return userRepository.findByEmail(email).map(User::getUserId)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
+    }
+
+    @Override
+    public List<UserResponse> searchUser(UserSearchRequest request) {
+        Specification<User> specification = UserSpecification.name(request.getName())
+                .and(UserSpecification.email(request.getEmail()))
+                .and(UserSpecification.nickname(request.getNickname()))
+                .and(UserSpecification.createdAt(request.getFrom(), request.getTo()));
+
+        List<UserResponse> result = userRepository.findAll(specification).stream()
+                .map(User::toApiResponse).collect(Collectors.toList());
+        return result;
     }
 }

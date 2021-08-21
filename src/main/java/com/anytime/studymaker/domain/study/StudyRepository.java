@@ -1,10 +1,8 @@
 package com.anytime.studymaker.domain.study;
 
-import java.util.Optional;
-
-import com.anytime.studymaker.domain.study.Study;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface StudyRepository extends JpaRepository<Study, Long> {
+public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecificationExecutor<Study> {
 
 }

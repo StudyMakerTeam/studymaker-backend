@@ -1,6 +1,7 @@
 package com.anytime.studymaker.domain.studyBoard;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface StudyBoardRepository extends JpaRepository<StudyBoard, Long> {
+public interface StudyBoardRepository extends JpaRepository<StudyBoard, Long>, JpaSpecificationExecutor<StudyBoard> {
 }

@@ -81,6 +81,12 @@ public class User implements UserDetails {
     }
 
     public UserResponse toApiResponse() {
-        return UserResponse.builder().email(email).name(name).nickname(nickname).createAt(createAt).updateAt(updateAt).build();
+        return UserResponse.builder()
+                .email(email)
+                .name(name)
+                .nickname(nickname)
+                .createAt(createAt)
+                .updateAt(updateAt)
+                .build();
     }
 }
