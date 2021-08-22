@@ -4,10 +4,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Data
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StudyResponse {
     private Long studyId;
     private String studyName;

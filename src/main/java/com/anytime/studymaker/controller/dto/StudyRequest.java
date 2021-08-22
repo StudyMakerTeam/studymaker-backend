@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import com.anytime.studymaker.domain.study.Study;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Data
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StudyRequest {
     private Long studyId;
     private String studyName;

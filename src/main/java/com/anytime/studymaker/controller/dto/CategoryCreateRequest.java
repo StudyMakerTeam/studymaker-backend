@@ -4,9 +4,9 @@ import com.anytime.studymaker.domain.category.Category;
 import lombok.*;
 
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Data
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CategoryCreateRequest {
     private String categoryName;
 

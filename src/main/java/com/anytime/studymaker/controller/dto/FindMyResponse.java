@@ -2,10 +2,10 @@ package com.anytime.studymaker.controller.dto;
 
 import lombok.*;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Data
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class FindMyResponse {
 
     private Long response;
