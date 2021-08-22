@@ -2,10 +2,10 @@ package com.anytime.studymaker.controller.dto;
 
 import lombok.*;
 
+@NoArgsConstructor
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 public class LoginResponse {
     private TokenResponse token;
     private Long userId;
