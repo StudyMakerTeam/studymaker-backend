@@ -1,9 +1,7 @@
 package com.anytime.studymaker.controller.dto;
 
 import com.anytime.studymaker.domain.category.Category;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +10,8 @@ import com.anytime.studymaker.domain.study.Study;
 
 @Data
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class StudyRequest {
     private Long studyId;
     private String studyName;

@@ -1,13 +1,12 @@
 package com.anytime.studymaker.controller.dto;
 
 import com.anytime.studymaker.domain.category.Category;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class CategoryCreateRequest {
     private String categoryName;
 
