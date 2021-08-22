@@ -6,6 +6,7 @@ import com.anytime.studymaker.controller.dto.UserRequest;
 import com.anytime.studymaker.controller.dto.UserResponse;
 import com.anytime.studymaker.domain.role.RoleRepository;
 import com.anytime.studymaker.domain.role.Roles;
+import com.anytime.studymaker.util.StudymakerMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,8 +42,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(StudymakerMessages.User.USER_NOT_FOUND));
+    }
+
+    @Override
     public UserResponse read(Long id) {
-        return userRepository.findById(id).map(User::toApiResponse).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
+        return userRepository.findById(id).map(User::toApiResponse)
+                .orElseThrow(() -> new UsernameNotFoundException(StudymakerMessages.User.USER_NOT_FOUND));
     }
 
     @Override
@@ -76,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getUserIdByEmail(String email) {
         return userRepository.findByEmail(email).map(User::getUserId)
-                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
+                .orElseThrow(() -> new UsernameNotFoundException(StudymakerMessages.User.USER_NOT_FOUND));
     }
 
     @Override

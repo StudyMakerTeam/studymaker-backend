@@ -12,4 +12,8 @@ public class StudymakerMessages {
     public class Category {
         public static final String CATEGORY_NOT_FOUND = "카테고리가 존재하지 않습니다.";
     }
+
+    public class Region {
+        public static final String REGION_NOT_FOUND = "지역이 존재하지 않습니다.";
+    }
 }

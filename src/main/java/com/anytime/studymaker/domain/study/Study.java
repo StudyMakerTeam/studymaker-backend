@@ -43,7 +43,7 @@ public class Study {
     List<UserStudy> userStudyList = new ArrayList<>();
 
     public StudyResponse toApiResponse() {
-        UserStudy managerInfo = null;
+        UserStudy managerInfo = userStudyList.get(0);
         int numberOfMember = 0;
 
         return StudyResponse.builder()

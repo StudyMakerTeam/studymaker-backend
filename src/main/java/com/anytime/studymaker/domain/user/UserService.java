@@ -16,6 +16,9 @@ public interface UserService extends UserDetailsService {
     void create(UserRequest request);
 
     @Secured("ROLE_USER")
+    User getUser(Long id);
+
+    @Secured("ROLE_USER")
     UserResponse read(Long id);
 
     @Secured("ROLE_USER")

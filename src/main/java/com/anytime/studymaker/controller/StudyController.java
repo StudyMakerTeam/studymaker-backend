@@ -28,8 +28,7 @@ public class StudyController {
 
     @PostMapping
     public ResponseEntity<StudyResponse> createStudy(@RequestBody StudyRequest request) {
-        Study study = studyService.create(request);
-        StudyResponse response = study.toApiResponse();
+        StudyResponse response = studyService.create(request);
         return ResponseEntity.ok(response);
     }
 

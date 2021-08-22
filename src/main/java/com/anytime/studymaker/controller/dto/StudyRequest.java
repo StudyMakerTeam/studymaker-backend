@@ -29,9 +29,9 @@ public class StudyRequest {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public Study toEntity(Category category) {
+    public Study toEntity() {
         return Study.builder().studyName(studyName).studyMaximum(studyMaximum).studySummary(studySummary)
                 .studyDescription(studyDescription).studyImage(studyImage).studyStatus(studyStatus).studyType(studyType)
-                .category(category).userStudyList(new ArrayList<>()).createAt(LocalDateTime.now()).build();
+                .userStudyList(new ArrayList<>()).createAt(LocalDateTime.now()).build();
     }
 }
