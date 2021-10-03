@@ -1,7 +1,5 @@
 package com.anytime.studymaker.controller;
 
-import java.util.Date;
-
 import com.anytime.studymaker.auth.AuthService;
 import com.anytime.studymaker.controller.dto.*;
 import com.anytime.studymaker.domain.user.UserService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Slf4j
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @RestController
