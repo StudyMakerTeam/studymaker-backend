@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: studymaker
+  profiles:
+    active: dev
+  cloud:
+    config:
+      enabled: false
+      uri: ec2-54-180-148-148.ap-northeast-2.compute.amazonaws.com:8888
