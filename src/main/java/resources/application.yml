@@ -1,9 +1,45 @@
+project:
+  studymaker
+
 spring:
-  application:
-    name: studymaker
-  profiles:
-    active: dev
-  cloud:
-    config:
-      enabled: false
-      uri: ec2-54-180-148-148.ap-northeast-2.compute.amazonaws.com:8888
+  datasource:
+    hikari:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://joojeongyong.c0g21czpi04j.ap-northeast-2.rds.amazonaws.com:3306/studymaker
+      username: jeongyong95
+      password: vmfhgod11
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+  redis:
+    host: redis-free.bm6rno.0001.apn2.cache.amazonaws.com
+    port: 6379
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    # username: {YOUR_GMAIL_ADDRESS}
+    # password: {YOUR_GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+jwt:
+  secret: studymaker_is_good_web_application_for_developer
+  issuer: studymaker
+  tokenValidityTimeLimit: 600000
