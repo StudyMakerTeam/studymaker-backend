@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: studymaker-backend
+  profiles:
+    active: dev
+  config:
+    import: optional:configserver:http://studymaker.space:8888
