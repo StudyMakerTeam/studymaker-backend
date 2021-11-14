@@ -3,12 +3,14 @@ version: 0.2
 phases:
   build:
     commands:
+      - echo Build Starting on `date`
       - chmod +x ./gradlew
       - ./gradlew build
   post_build:
     commands:
-      - echo Build completed on `date`
-artifacts:
-  files:
-    - build/libs/*.jar
-  discard-paths: yes
+      - echo $(basename ./build/libs/*.jar)
+      - pwd
+
+cache:
+  paths:
+    - '/root/.gradle/caches/**/*'
