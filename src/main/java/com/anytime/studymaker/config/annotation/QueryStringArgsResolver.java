@@ -1,4 +1,4 @@
-package com.anytime.studymaker.config;
+package com.anytime.studymaker.config.annotation;
 
 
 import com.anytime.studymaker.config.annotation.QueryStringToJson;
