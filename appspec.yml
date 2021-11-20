@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/app/build/
+hooks:
+  AfterInstall:
+    - location: Scripts/RunResourceTests.sh
+      timeout: 180
+      runas: ec2-user
