@@ -12,7 +12,7 @@ phases:
       - pwd
 artifacts:
   files:
-    - '*.jar'
+    - '**/*.jar'
     - appspec.yml
     - scripts/start.sh
 
