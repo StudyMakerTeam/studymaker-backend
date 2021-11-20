@@ -12,7 +12,7 @@ phases:
       - pwd
 artifacts:
   files:
-    - build/libs/*.jar
+    - studymaker-backend-*-SNAPSHOT.jar
     - appspec.yml
     - scripts/start.sh
 
