@@ -1,9 +1,9 @@
 version: 0.0
 os: linux
 files:
-  - source: /**/*.jar
+  - source: build/libs/*.jar
     destination: /home/ec2-user/app/studymaker/
-  - source: /**/start.sh
+  - source: /scripts/start.sh
     destination: /home/ec2-user/app/studymaker/
 hooks:
   AfterInstall:
