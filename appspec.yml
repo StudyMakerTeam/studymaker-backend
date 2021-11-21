@@ -1,10 +1,12 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ec2-user/app/deployment/
+  - source: /**/*.jar
+    destination: /home/ec2-user/app/studymaker/
+  - source: /**/start.sh
+    destination: /home/ec2-user/app/studymaker/
 hooks:
   AfterInstall:
-    - location: scripts/start.sh
+    - location: start.sh
       timeout: 180
       runas: ec2-user

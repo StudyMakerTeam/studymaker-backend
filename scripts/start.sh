@@ -6,6 +6,10 @@ JAR_NAME=$(basename $BUILD_JAR)
 DEPLOY_LOG_PATH=/home/ec2-user/log/${PROJECT_NAME}
 echo "> build 파일명: $JAR_NAME" >>${DEPLOY_LOG_PATH}/deploy.log
 
+DEPLOY_JAR_PATH=/home/ec2-user/app/${PROJECT_NAME}/deployment/${JAR_NAME}
+cp BUILD_JAR DEPLOY_JAR_PATH
+echo "> 배포용 jar 생성 : $DEPLOY_JAR_PATH" >>${DEPLOY_LOG_PATH}/deploy.log
+
 echo "> 현재 실행중인 애플리케이션 pid 확인" >>${DEPLOY_LOG_PATH}/deploy.log
 CURRENT_PID=$(pgrep -f $JAR_NAME)
 
@@ -18,4 +22,4 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포" >>${DEPLOY_LOG_PATH}/deploy.log
-nohup java -jar $BUILD_JAR >>${DEPLOY_LOG_PATH}/deploy.log 2>${DEPLOY_LOG_PATH}/deploy_err.log &
+nohup java -jar $DEPLOY_JAR_PATH >>${DEPLOY_LOG_PATH}/deploy.log 2>${DEPLOY_LOG_PATH}/deploy_err.log &
