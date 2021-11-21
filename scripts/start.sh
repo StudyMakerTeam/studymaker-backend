@@ -6,7 +6,7 @@ JAR_NAME=$(basename $BUILD_JAR)
 DEPLOY_LOG_PATH=/home/ec2-user/log/${PROJECT_NAME}
 echo "> build 파일명: $JAR_NAME" >>${DEPLOY_LOG_PATH}/deploy.log
 
-DEPLOY_JAR_PATH=/home/ec2-user/app/${PROJECT_NAME}/deployment/${JAR_NAME}
+DEPLOY_JAR_PATH=/home/ec2-user/app/deployment/${JAR_NAME}
 cp BUILD_JAR DEPLOY_JAR_PATH
 echo "> 배포용 jar 생성 : $DEPLOY_JAR_PATH" >>${DEPLOY_LOG_PATH}/deploy.log
 
