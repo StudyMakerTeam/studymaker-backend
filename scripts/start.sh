@@ -1,6 +1,6 @@
 #!/bin/bash
 PROJECT_NAME=studymaker
-BUILD_JAR=$(ls /home/ec2-user/app/$PROJECT_NAME/build/libs/*.jar)
+BUILD_JAR=$(ls /home/ec2-user/app/$PROJECT_NAME/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
 DEPLOY_LOG_PATH=/home/ec2-user/log/$PROJECT_NAME
