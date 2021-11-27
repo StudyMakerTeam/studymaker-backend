@@ -1,12 +1,13 @@
 #!/bin/bash
-BUILD_JAR=$(ls /home/ec2-user/app/studymaker/*.jar)
+PROJECT_NAME=studymaker
+BUILD_JAR=$(ls /home/ec2-user/app/$PROJECT_NAME/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
-DEPLOY_LOG_PATH=/home/ec2-user/log/studymaker
+DEPLOY_LOG_PATH=/home/ec2-user/log/$PROJECT_NAME
 echo "> build 파일명: $JAR_NAME" >>$DEPLOY_LOG_PATH/deploy.log
 
 DEPLOY_JAR_PATH=/home/ec2-user/app/deployment/$JAR_NAME
-cp BUILD_JAR DEPLOY_JAR_PATH
+cp $BUILD_JAR $DEPLOY_JAR_PATH
 echo "> 배포용 jar 생성 : $DEPLOY_JAR_PATH" >>$DEPLOY_LOG_PATH/deploy.log
 
 echo "> 현재 실행중인 애플리케이션 pid 확인" >>$DEPLOY_LOG_PATH/deploy.log
